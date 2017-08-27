@@ -1,8 +1,11 @@
 require('dotenv').config()
 
 const express = require('express')
+const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const logger = require('morgan')
+
 const config = require('./config')
 const categories = require('./categories')
 const posts = require('./posts')
@@ -10,11 +13,13 @@ const comments = require('./comments')
 
 const app = express()
 
-app.use(express.static('public'))
+app.use(logger('dev'))
+
+app.use(express.static(path.join(__dirname, '../public')))
 app.use(cors())
 
 
-app.get('/', (req, res) => {
+app.get('/usage', (req, res) => {
   const help = `
   <pre>
     Welcome to the Udacity Readable API!
@@ -26,10 +31,10 @@ app.get('/', (req, res) => {
     The following endpoints are available:
 
     GET /categories
-      USAGE: 
+      USAGE:
         Get all of the categories available for the app. List is found in categories.js.
         Feel free to extend this list as you desire.
-    
+
     GET /:category/posts
       USAGE:
         Get all of the posts for a particular category
@@ -37,12 +42,12 @@ app.get('/', (req, res) => {
     GET /posts
       USAGE:
         Get all of the posts. Useful for the main page when no category is selected.
-    
+
     POST /posts
       USAGE:
         Add a new post
-      
-      PARAMS: 
+
+      PARAMS:
         id - UUID should be fine, but any unique id will work
         timestamp - timestamp in whatever format you like, you can use Date.now() if you like
         title - String
@@ -59,7 +64,7 @@ app.get('/', (req, res) => {
         Used for voting on a post
       PARAMS:
         option - String: Either "upVote" or "downVote"
-        
+
     PUT /posts/:id
       USAGE:
         Edit the details of an existing post
@@ -69,13 +74,13 @@ app.get('/', (req, res) => {
 
     DELETE /posts/:id
       USAGE:
-        Sets the deleted flag for a post to 'true'. 
+        Sets the deleted flag for a post to 'true'.
         Sets the parentDeleted flag for all child comments to 'true'.
-      
+
     GET /posts/:id/comments
       USAGE:
         Get all the comments for a single post
-    
+
     POST /comments
       USAGE:
         Add a comment to a post
@@ -98,7 +103,7 @@ app.get('/', (req, res) => {
     PUT /comments/:id
       USAGE:
         Edit the details of an existing comment
-     
+
       PARAMS:
         timestamp: timestamp. Get this however you want.
         body: String
