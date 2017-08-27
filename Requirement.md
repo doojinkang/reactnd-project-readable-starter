@@ -1,7 +1,14 @@
+# Story list
+
+1. Default Root List View
+   css, html
+   redux storage
+
 # Data
 
 1 Categories
-  Array in caregories.js (fixed number)
+
+  - Array in caregories.js (fixed number)
 
 2 Posts
 
