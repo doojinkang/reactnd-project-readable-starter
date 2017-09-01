@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
-import { postAdd } from '../actions'
 
 class PostList extends Component {
 
   render() {
     const { posts } = this.props
-    console.log('render ', posts)
+    console.log('PostList.render', posts)
 
     return (
       <div className='container'>
         Post List
         <div>
-          {this.props.match.params.tag ? this.props.match.params.tag : 'All'}
+          {/* {this.props.match.params.tag ? this.props.match.params.tag : 'All'} */}
         </div>
 
         <table className='table table-bordered table-hover'>
@@ -26,8 +23,8 @@ class PostList extends Component {
             </tr>
           </thead>
           <tbody>
-          { posts.map( (post) => (
-            <tr>
+           { posts.map( (post) => (
+            <tr key={post.id}>
               <td>
                 { post.title }
               </td>
@@ -50,19 +47,5 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps(posts) {
-  return {
-    posts: Object.keys(posts).map((key) => (
-          posts[key]
-        ))
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addPost : (data) => dispatch(postAdd(data)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default PostList
 
