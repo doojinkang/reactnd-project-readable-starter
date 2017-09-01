@@ -1,14 +1,68 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-const PostList = ({match}) => {
-  return (
-    <div className='container'>
-      Post List
-      <div>
-        {match.params.tag ? match.params.tag : 'All'}
+import { postAdd } from '../actions'
+
+class PostList extends Component {
+
+  render() {
+    const { posts } = this.props
+    console.log('render ', posts)
+
+    return (
+      <div className='container'>
+        Post List
+        <div>
+          {this.props.match.params.tag ? this.props.match.params.tag : 'All'}
+        </div>
+
+        <table className='table table-bordered table-hover'>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Date</th>
+              <th>vote</th>
+            </tr>
+          </thead>
+          <tbody>
+          { posts.map( (post) => (
+            <tr>
+              <td>
+                { post.title }
+              </td>
+              <td>
+                { post.author }
+              </td>
+              <td>
+                { post.timestamp }
+              </td>
+              <td>
+                { post.voteScore }
+              </td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+
       </div>
-    </div>
-  )
+    )
+  }
 }
 
-export default PostList
+function mapStateToProps(posts) {
+  return {
+    posts: Object.keys(posts).map((key) => (
+          posts[key]
+        ))
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost : (data) => dispatch(postAdd(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+
