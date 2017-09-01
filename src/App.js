@@ -15,7 +15,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 
 class App extends Component {
+  state = {
+    tags: []
+  }
+
   componentDidMount = () => {
+    PostAPI.getTags().then( (data) => {
+      console.log('API.getTags', data)
+      this.setState( {tags: data} )
+    })
     PostAPI.getPosts().then( (data) => {
       console.log('API.getPosts', data)
       data.map((post)=>{
@@ -29,11 +37,19 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Header/>
+          <Header tags={this.state.tags}/>
           <Route exact path='/' component={Home}/>
           <Route path='/about' component={About}/>
-          <Route exact path='/created' component={() => (<PostList posts={this.props.posts} />)}/>
-          <Route path='/created/:tag' component={() => (<PostList posts={this.props.posts} />)}/>
+          <Route exact path='/created'
+            render={(props) => (
+              <PostList {...props} posts={this.props.posts} />
+            )}
+          />
+          <Route path='/created/:tag'
+            render={(props) => (
+              <PostList {...props} posts={this.props.posts} />
+            )}
+          />
         </div>
       </Router>
     )

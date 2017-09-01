@@ -4,13 +4,15 @@ class PostList extends Component {
 
   render() {
     const { posts } = this.props
-    console.log('PostList.render', posts)
+    const { tag } = this.props.match.params
+    const filtered_posts = tag ? posts.filter((post) => (post.category === tag)) : posts
+    console.log('PostList.render', filtered_posts)
 
     return (
       <div className='container'>
         Post List
         <div>
-          {/* {this.props.match.params.tag ? this.props.match.params.tag : 'All'} */}
+            {tag ? tag : 'All'}
         </div>
 
         <table className='table table-bordered table-hover'>
@@ -23,7 +25,7 @@ class PostList extends Component {
             </tr>
           </thead>
           <tbody>
-           { posts.map( (post) => (
+           { filtered_posts.map( (post) => (
             <tr key={post.id}>
               <td>
                 { post.title }
