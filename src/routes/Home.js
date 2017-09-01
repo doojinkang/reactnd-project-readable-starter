@@ -1,10 +1,9 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 const Home = () => {
   return (
-    <div className='container'>
-      Home will redirect to '/created or /trending'
-    </div>
+    <Redirect to='/created'/>
   );
 };
 
