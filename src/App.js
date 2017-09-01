@@ -47,7 +47,9 @@ class App extends Component {
           />
           <Route path='/created/:tag'
             render={(props) => (
-              <PostList {...props} posts={this.props.posts} />
+              <PostList {...props}
+                posts={this.props.posts.filter((post)=>(post.category===props.match.params.tag))}
+              />
             )}
           />
         </div>

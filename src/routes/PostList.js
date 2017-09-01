@@ -5,8 +5,6 @@ class PostList extends Component {
   render() {
     const { posts } = this.props
     const { tag } = this.props.match.params
-    const filtered_posts = tag ? posts.filter((post) => (post.category === tag)) : posts
-    console.log('PostList.render', filtered_posts)
 
     return (
       <div className='container'>
@@ -25,7 +23,7 @@ class PostList extends Component {
             </tr>
           </thead>
           <tbody>
-           { filtered_posts.map( (post) => (
+           { posts.map( (post) => (
             <tr key={post.id}>
               <td>
                 { post.title }
