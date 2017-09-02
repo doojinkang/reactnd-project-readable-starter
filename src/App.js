@@ -7,6 +7,7 @@ import * as PostAPI from './PostAPI'
 import Home from './routes/Home'
 import About from './routes/About'
 import PostList from './routes/PostList'
+import Form from './routes/Form'
 import Header from './components/Header'
 
 import { postAdd } from './actions'
@@ -52,6 +53,7 @@ class App extends Component {
               />
             )}
           />
+          <Route path='/write' component={Form}/>
         </div>
       </Router>
     )

@@ -1,4 +1,8 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+
+import {Grid, Row, Col } from 'react-bootstrap'
+
 
 class PostList extends Component {
 
@@ -8,10 +12,17 @@ class PostList extends Component {
 
     return (
       <div className='container'>
-        Post List
-        <div>
-            {tag ? tag : 'All'}
-        </div>
+        <Grid>
+          <Row className="show-grid">
+            <Col xs={6} xsOffset={6}>
+              <strong>Tag : {tag ? tag : 'All'}</strong>
+            </Col>
+            <Col xs={6} xsOffset={10}>
+              <Link to='/write'>Submit a Story</Link>
+            </Col>
+          </Row>
+        </Grid>
+        <br />
 
         <table className='table table-bordered table-hover'>
           <thead>
