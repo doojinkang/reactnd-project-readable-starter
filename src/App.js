@@ -53,7 +53,13 @@ class App extends Component {
               />
             )}
           />
-          <Route path='/write' component={Form}/>
+          <Route path='/write'
+            render={(props) => (
+              <Form {...props}
+                tags={this.state.tags}
+              />
+            )}
+          />
         </div>
       </Router>
     )

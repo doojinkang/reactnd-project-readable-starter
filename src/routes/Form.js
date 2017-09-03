@@ -2,8 +2,16 @@ import React, { Component } from 'react'
 
 class Form extends Component {
   state = {
-    tagValue : 'react'
+    tagValue : ''
   }
+
+  // constructor(props) {
+  //   super(props)
+  //   const defaultTag = props.tags[2].name
+  //   this.state = {
+  //     tagValue : defaultTag
+  //   }
+  // }
 
   handleTagValue = (e) => {
     const tag = e.target.value
@@ -35,9 +43,12 @@ class Form extends Component {
                     name='tag'
                     value={this.state.tagValue}
                     onChange={this.handleTagValue}>
-              <option value='react'> react </option>
-              <option value='redux'> redux </option>
-              <option value='udacity'> udacity </option>
+                <option value='' disabled> Select </option>
+            {
+              this.props.tags.map((tag) => (
+                <option key={tag.name} value={tag.name}> {tag.name} </option>
+              ))
+            }
             </select>
           </div>
           <div style={{marginTop:'10px'}}>
