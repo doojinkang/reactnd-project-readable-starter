@@ -37,7 +37,7 @@ class PostList extends Component {
            { posts.map( (post) => (
             <tr key={post.id}>
               <td>
-                { post.title }
+                <Link to={`/detail/${post.id}`}>{ post.title }</Link>
               </td>
               <td>
                 { post.author }

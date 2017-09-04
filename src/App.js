@@ -8,6 +8,7 @@ import Home from './routes/Home'
 import About from './routes/About'
 import PostList from './routes/PostList'
 import Form from './routes/Form'
+import Detail from './routes/Detail'
 import Header from './components/Header'
 
 import { postAdd } from './actions'
@@ -53,6 +54,7 @@ class App extends Component {
               />
             )}
           />
+          <Route path='/detail/:id' component={Detail}/>
           <Route path='/write'
             render={(props) => (
               <Form {...props}
