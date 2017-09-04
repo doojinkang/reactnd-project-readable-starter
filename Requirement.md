@@ -1,8 +1,13 @@
 # Story list
 
 1. Default Root List View
-   css, html
-   redux storage
+
+  - css, html : bootstrap, router4
+  - redux storage  Post, Comments
+  - actions : post => add, update, vote, delete
+              comment => add, update, vote, delete
+  - reducer : posts (처음에는 하나만)
+  - Form : calls newPost API and action addPost
 
 # Data
 
