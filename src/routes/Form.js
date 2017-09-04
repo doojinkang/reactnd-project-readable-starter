@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import serializeform from 'form-serialize'
 import uuid from 'uuid'
 import base64 from 'uuid-base64'
+
+import * as PostAPI from '../PostAPI'
+
+import { postAdd } from '../actions'
 
 class Form extends Component {
   state = {
@@ -11,13 +17,22 @@ class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const value = {
-      ...serializeform(e.target, { hash: true}),
       id: base64.encode(uuid.v4()),
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      title: 'noname title',
+      body: 'no content',
+      author: 'none',
+      ...serializeform(e.target, { hash: true})
     }
-    console.log(value)
-    // if (this.props.onCreateContact)
-    //   this.props.onCreateContact(value)
+    if (typeof value.category === 'undefined')
+      value.category = this.props.tags[0].name
+    // console.log(value)
+    PostAPI.newPost(value.id, value.timestamp, value.title,
+                    value.body, value.author, value.category).then( (data) => {
+      console.log('API.newPost', data)
+      this.props.addPost(data)
+      this.props.history.push('/')
+    })
   }
 
   // constructor(props) {
@@ -55,7 +70,7 @@ class Form extends Component {
             <input type='text' className='form-control' name='author'/>
             <span className = 'label label-default' style={{margin:'0 20px 0 50px'}}> Tag </span>
             <select
-                    name='tag'
+                    name='category'
                     value={this.state.tagValue}
                     onChange={this.handleTagValue}>
                 <option value='' disabled> Select </option>
@@ -69,7 +84,7 @@ class Form extends Component {
           <div style={{marginTop:'10px'}}>
             <button className='btn btn-default'>Submit</button>
             <span style={{marginLeft: '10px'}}>
-              <a href='#' onclick='window.history.back()'>Cancel</a>
+              <a href='javascript:history.back()'>Cancel</a>
             </span>
           </div>
         </form>
@@ -79,4 +94,10 @@ class Form extends Component {
   }
 }
 
-export default Form
+function mapDispatchToProps(dispatch) {
+  return {
+    addPost : (data) => dispatch(postAdd(data)),
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(Form)
