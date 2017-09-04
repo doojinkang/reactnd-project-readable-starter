@@ -1,8 +1,23 @@
 import React, { Component } from 'react'
+import serializeform from 'form-serialize'
+import uuid from 'uuid'
+import base64 from 'uuid-base64'
 
 class Form extends Component {
   state = {
     tagValue : ''
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const value = {
+      ...serializeform(e.target, { hash: true}),
+      id: base64.encode(uuid.v4()),
+      timestamp: Date.now()
+    }
+    console.log(value)
+    // if (this.props.onCreateContact)
+    //   this.props.onCreateContact(value)
   }
 
   // constructor(props) {
@@ -26,7 +41,7 @@ class Form extends Component {
     return (
       <div className='container'>
 
-        <form action='' method='post'>
+        <form action='' onSubmit={this.handleSubmit}>
           <div className='form-group'>
             <span className = 'label label-default'> Title </span>
             <input type='text' className='form-control' name='title'/>
@@ -53,6 +68,9 @@ class Form extends Component {
           </div>
           <div style={{marginTop:'10px'}}>
             <button className='btn btn-default'>Submit</button>
+            <span style={{marginLeft: '10px'}}>
+              <a href='#' onclick='window.history.back()'>Cancel</a>
+            </span>
           </div>
         </form>
 
