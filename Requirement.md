@@ -9,6 +9,12 @@
   - reducer : posts (처음에는 하나만)
   - Form : calls newPost API and action addPost
 
+2. Detail View
+
+  - src/routes/Detail.js
+  - delete, vote
+
+
 # Data
 
 1 Categories
