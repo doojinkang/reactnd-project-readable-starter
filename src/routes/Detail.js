@@ -1,9 +1,29 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+
+import * as PostAPI from '../PostAPI'
 
 class Detail extends Component {
+  state = {
+    detail : {
+      title: '',
+      body: '',
+      author: '',
+      category: '',
+    }
+  }
+
+  componentDidMount() {
+    PostAPI.getPostDetail(this.props.match.params.id).then( (data) => {
+      console.log('API.getPostDetail', data)
+      this.setState( {
+        ...this.state,
+        detail: data
+      })
+    })
+  }
+
   render() {
-    const post = this.props.posts[this.props.match.params.id]
+    const post = this.state.detail
     console.log('...', post)
     return (
       <div className='container'>
@@ -41,11 +61,4 @@ class Detail extends Component {
   }
 }
 
-
-function mapStateToProps(posts) {
-  return {
-    posts: posts
-  }
-}
-
-export default connect(mapStateToProps, undefined)(Detail)
+export default Detail
