@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import * as PostAPI from '../PostAPI'
 
+import Comment from './Comment'
+
 class Detail extends Component {
   state = {
     post : {
@@ -67,41 +69,8 @@ class Detail extends Component {
         </div>
 
         <hr/>
-        <div>
-          <table className='table table-bordered table-hover'>
-            <thead>
-              <tr>
-                <th>Comment</th>
-                <th>Author</th>
-                <th>Date</th>
-                <th>vote</th>
-                <th> </th>
-              </tr>
-            </thead>
-            <tbody>
 
-          {comments.map((comment)=>(
-            <tr key={ comment.id }>
-              <td>
-                { comment.body }
-              </td>
-              <td>
-                { comment.author }
-              </td>
-              <td>
-                { comment.timestamp }
-              </td>
-              <td>
-                { comment.voteScore }
-              </td>
-              <td>
-                <button className='btn btn-default'>vote</button>
-              </td>
-            </tr>
-          ))}
-            </tbody>
-          </table>
-        </div>
+        <Comment comments={comments}></Comment>
 
       </div>
     )
