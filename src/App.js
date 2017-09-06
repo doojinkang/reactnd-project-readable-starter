@@ -68,10 +68,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(posts) {
+function mapStateToProps( {post, comment} ) {
   return {
-    posts: Object.keys(posts).map((key) => (
-          posts[key]
+    posts: Object.keys(post).map((key) => (
+          post[key]
         ))
   }
 }
