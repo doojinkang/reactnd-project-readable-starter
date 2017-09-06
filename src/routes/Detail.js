@@ -81,7 +81,7 @@ class Detail extends Component {
             <tbody>
 
           {comments.map((comment)=>(
-            <tr>
+            <tr key={ comment.id }>
               <td>
                 { comment.body }
               </td>
@@ -100,7 +100,7 @@ class Detail extends Component {
             </tr>
           ))}
             </tbody>
-          </table>         
+          </table>
         </div>
 
       </div>
