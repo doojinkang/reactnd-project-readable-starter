@@ -12,7 +12,19 @@
 2. Detail View
 
   - src/routes/Detail.js
-  - delete, vote
+  - Data from store, id from props.match.params
+    --> Detail View 에서 페이지를 리프레시하는 경우 문제 발생
+        이유는 App.js 에서 데이터를 아직 가져오지 않았음
+        해결책
+        1. fetch getDetail in detail view :
+          이 경우도 같은 문제를 발생시킴
+          이렇게 하면 App.js 부터 시작하지 않나?
+        2. 가짜 데이터를 먼저 만들어 놓고,
+          fetch 후 업데이트 하도록 하면 된다.
+
+  - show comment
+  - add comment
+    reducer now have state of post and comment
 
 
 # Data
