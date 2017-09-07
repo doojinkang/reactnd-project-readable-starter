@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import * as PostAPI from '../PostAPI'
+import { _dt } from '../lib/dateUtil'
 
 import Comment from './Comment'
 
@@ -44,6 +45,9 @@ class Detail extends Component {
           <span className = 'label label-default'> Title </span>
           <div>
             {post.title}
+            <span style={{marginLeft: '20px'}}>
+              { _dt(post.timestamp) }
+            </span>
           </div>
         </div>
         <div className='form-group'>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import {Grid, Row, Col } from 'react-bootstrap'
 
+import { _dt } from '../lib/dateUtil'
 
 class PostList extends Component {
 
@@ -43,7 +44,7 @@ class PostList extends Component {
                 { post.author }
               </td>
               <td>
-                { post.timestamp }
+                { _dt(post.timestamp) }
               </td>
               <td>
                 { post.voteScore }

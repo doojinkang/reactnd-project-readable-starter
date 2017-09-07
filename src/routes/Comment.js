@@ -6,6 +6,7 @@ import uuid from 'uuid'
 import base64 from 'uuid-base64'
 
 import * as PostAPI from '../PostAPI'
+import { _dt } from '../lib/dateUtil'
 
 import { commentAdd } from '../actions'
 
@@ -53,7 +54,7 @@ class Comment extends Component {
               { comment.author }
             </td>
             <td>
-              { comment.timestamp }
+              { _dt(comment.timestamp) }
             </td>
             <td>
               { comment.voteScore }
