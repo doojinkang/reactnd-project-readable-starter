@@ -1,6 +1,33 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
+import serializeform from 'form-serialize'
+import uuid from 'uuid'
+import base64 from 'uuid-base64'
+
+import * as PostAPI from '../PostAPI'
+
+import { commentAdd } from '../actions'
 
 class Comment extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault()
+    const value = {
+      id: base64.encode(uuid.v4()),
+      timestamp: Date.now(),
+      body: 'no content',
+      author: 'none',
+      parentId: this.props.parentId,
+      ...serializeform(e.target, { hash: true})
+    }
+    console.log(value)
+    PostAPI.newComment(value.id, value.timestamp,
+                    value.body, value.author, value.parentId).then( (data) => {
+      console.log('API.newComment', data)
+      this.props.addComment(data)
+    })
+  }
+
   render() {
     const {comments} = this.props
     return (
@@ -39,17 +66,26 @@ class Comment extends Component {
           </tbody>
         </table>
 
-        <div className='form-inline'>
-          <span className = 'label label-default' style={{marginRight:'10px'}}> Author </span>
-          <input type='text' className='form-control' style={{marginRight:'20px'}} name='author'/>
-          <span className = 'label label-default' style={{marginRight:'10px'}}> Comment </span>
-          <input type='text' className='form-control' style={{marginRight:'20px'}} name='Comment'/>
-          <button className='btn btn-default'>Comment</button>
-        </div>
+        <form action='' onSubmit={this.handleSubmit}>
+          <div className='form-inline'>
+            <span className = 'label label-default' style={{marginRight:'10px'}}> Author </span>
+            <input type='text' className='form-control' style={{marginRight:'20px'}} name='author'/>
+            <span className = 'label label-default' style={{marginRight:'10px'}}> Comment </span>
+            <input type='text' className='form-control' style={{marginRight:'20px'}} name='body'/>
+            <button className='btn btn-default'>Submit</button>
+          </div>
+        </form>
 
       </div>
     );
   }
 }
 
-export default Comment;
+function mapDispatchToProps(dispatch) {
+  return {
+    addComment : (data) => dispatch(commentAdd(data)),
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(Comment)
+

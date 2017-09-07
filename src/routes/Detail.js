@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import * as PostAPI from '../PostAPI'
 
 import Comment from './Comment'
+
+import { commentAdd } from '../actions'
 
 class Detail extends Component {
   state = {
@@ -11,8 +14,7 @@ class Detail extends Component {
       body: '',
       author: '',
       category: '',
-    },
-    comments: []
+    }
   }
 
   componentDidMount() {
@@ -26,16 +28,14 @@ class Detail extends Component {
 
     PostAPI.getComments(this.props.match.params.id).then( (data) => {
       console.log('API.getComments', data)
-      this.setState( {
-        ...this.state,
-        comments: data
+      data.map((comment)=>{
+        this.props.addComment(comment)
       })
     })
   }
 
   render() {
     const post = this.state.post
-    const comments = this.state.comments
     console.log('...', post)
     return (
       <div className='container'>
@@ -70,11 +70,28 @@ class Detail extends Component {
 
         <hr/>
 
-        <Comment comments={comments}></Comment>
-
+        <Comment parentId={this.props.match.params.id}
+                 comments={this.props.comments.filter(
+                   (comment)=>(comment.parentId===this.props.match.params.id))}
+        />
       </div>
     )
   }
 }
 
-export default Detail
+function mapStateToProps( {comment} ) {
+  return {
+    comments: Object.keys(comment).map((key) => (
+          comment[key]
+        ))
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addComment : (data) => dispatch(commentAdd(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)
+
