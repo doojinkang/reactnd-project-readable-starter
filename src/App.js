@@ -54,7 +54,13 @@ class App extends Component {
               />
             )}
           />
-          <Route path='/detail/:id' component={Detail}/>
+          <Route path='/detail/:id'
+            render={(props) => (
+              <Detail {...props}
+               post={this.props.posts.find((post)=>(post.id===props.match.params.id))}
+              />
+            )}
+          />
           <Route path='/write'
             render={(props) => (
               <Form {...props}

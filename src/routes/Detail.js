@@ -9,24 +9,8 @@ import Comment from './Comment'
 import { commentAdd } from '../actions'
 
 class Detail extends Component {
-  state = {
-    post : {
-      title: '',
-      body: '',
-      author: '',
-      category: '',
-    }
-  }
 
   componentDidMount() {
-    PostAPI.getPostDetail(this.props.match.params.id).then( (data) => {
-      console.log('API.getPostDetail', data)
-      this.setState( {
-        ...this.state,
-        post: data
-      })
-    })
-
     PostAPI.getComments(this.props.match.params.id).then( (data) => {
       console.log('API.getComments', data)
       data.map((comment)=>{
@@ -36,7 +20,7 @@ class Detail extends Component {
   }
 
   render() {
-    const post = this.state.post
+    const post = this.props.post
     console.log('...', post)
     return (
       <div className='container'>
@@ -44,28 +28,34 @@ class Detail extends Component {
         <div className='form-group'>
           <span className = 'label label-default'> Title </span>
           <div>
-            {post.title}
+            {post && post.title}
             <span style={{marginLeft: '20px'}}>
-              { _dt(post.timestamp) }
+              { post && _dt(post.timestamp) }
             </span>
           </div>
         </div>
         <div className='form-group'>
           <span className = 'label label-default'> Body </span>
           <div>
-            {post.body}
+            { post && post.body}
           </div>
         </div>
         <div className='form-group'>
           <span className = 'label label-default'> Author </span>
           <div>
-            {post.author}
+            { post && post.author}
+          </div>
+        </div>
+        <div className='form-group'>
+          <span className = 'label label-default'> VoteScore </span>
+          <div>
+            {post && post.voteScore}
           </div>
         </div>
         <div className='form-group'>
           <span className = 'label label-default'> Tag </span>
           <div>
-            {post.category}
+            { post && post.category}
           </div>
         </div>
         <div style={{marginTop:'10px'}}>
