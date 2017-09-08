@@ -6,7 +6,7 @@ import { _dt } from '../lib/dateUtil'
 
 import Comment from './Comment'
 
-import { commentAdd } from '../actions'
+import { commentAdd, postVote } from '../actions'
 
 class Detail extends Component {
 
@@ -16,6 +16,14 @@ class Detail extends Component {
       data.map((comment)=>{
         this.props.addComment(comment)
       })
+    })
+  }
+
+  processVote = (id, option) => {
+    PostAPI.votePost(id, option).then( (data) => {
+      console.log('API.votePost', data)
+      const newVoteScore = data.voteScore
+      this.props.votePost({id, newVoteScore})
     })
   }
 
@@ -59,7 +67,8 @@ class Detail extends Component {
           </div>
         </div>
         <div style={{marginTop:'10px'}}>
-          <button className='btn btn-default'>vote</button>
+          <button className='btn btn-default' onClick={() => this.processVote(post.id, "upVote")}>voteUp</button>
+          <button className='btn btn-default' onClick={() => this.processVote(post.id, "downVote")}>voteDown</button>
         </div>
 
         <hr/>
@@ -83,6 +92,7 @@ function mapStateToProps( {comment} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    votePost : (data) => dispatch((postVote(data))),
     addComment : (data) => dispatch(commentAdd(data)),
   }
 }
