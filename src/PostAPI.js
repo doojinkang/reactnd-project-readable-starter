@@ -38,7 +38,7 @@ export const getPostDetail = (id) =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
 
-// Need verify
+// verified
 export const votePost = (id, option) =>
   fetch(`${api}/posts/${id}`, {
     method: 'POST',
@@ -82,4 +82,14 @@ export const newComment = (id, timestamp, body, author, parentId) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ id, timestamp, body, author, parentId })
+  }).then(res => res.json())
+
+  export const voteComment = (id, option) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({id, option})
   }).then(res => res.json())
