@@ -6,7 +6,7 @@ import { _dt } from '../lib/dateUtil'
 
 import Comment from './Comment'
 
-import { commentAdd, postVote } from '../actions'
+import { postVote, commentAdd, commentVote } from '../actions'
 
 class Detail extends Component {
 
@@ -76,6 +76,7 @@ class Detail extends Component {
         <Comment parentId={this.props.match.params.id}
                  comments={this.props.comments.filter(
                    (comment)=>(comment.parentId===this.props.match.params.id))}
+                 voteComment={this.props.voteComment}
         />
       </div>
     )
@@ -94,6 +95,7 @@ function mapDispatchToProps(dispatch) {
   return {
     votePost : (data) => dispatch((postVote(data))),
     addComment : (data) => dispatch(commentAdd(data)),
+    voteComment : (data) => dispatch(commentVote(data))
   }
 }
 

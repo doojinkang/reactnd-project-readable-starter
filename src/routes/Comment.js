@@ -29,6 +29,14 @@ class Comment extends Component {
     })
   }
 
+  processVote = (id, option) => {
+    PostAPI.voteComment(id, option).then( (data) => {
+      console.log('API.voteComment', data)
+      const newVoteScore = data.voteScore
+      this.props.voteComment({id, newVoteScore})
+    })
+  }
+
   render() {
     const {comments} = this.props
     return (
@@ -60,7 +68,8 @@ class Comment extends Component {
               { comment.voteScore }
             </td>
             <td>
-              <button className='btn btn-default'>vote</button>
+              <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'upVote')}>voteUp</button>
+              <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'downVote')}>voteDown</button>
             </td>
           </tr>
         ))}
