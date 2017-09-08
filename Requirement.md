@@ -25,7 +25,22 @@
   - show comment
   - add comment
     reducer now have state of post and comment
+  - vote : upvote, downvote
+  - edit, delete, vote
 
+  Detail 문제
+    1. getDetail Fetch 후에는 state 에만 저장이 가능함
+       state 를 써서 문제가 되는 것은 아닌 것 같음
+    2. mapProps 를 통해서는 아직 props 가 설정되기 전에 render
+    3. App 으로부터 prop 을 받는 경우에도 2번과 같은 문제 발생
+       ==> post && post.title 로 출력
+       object 를 만드는 경우 default 값을 설정할 수 있으면
+
+  API.votePost 후
+    this.props.votePost({id, newVoteScore})
+    에서 두개의 reducer 에 모두 action 이 전달 된다.
+    reducer.post POST_VOTE
+    reducer.comment POST_VOTE // 이것은 무시됨
 
 # Data
 
