@@ -21,7 +21,7 @@ const Header = (props) => (
         <NavDropdown title="Tags" id="basic-nav-dropdown">
         {props.tags.map((tag) => (
           <MenuItem key={tag.name}>
-            <NavLink to={`/created/${tag.name}`}>{tag.name}</NavLink>
+            <NavLink to={`/created/${tag.path}`}>{tag.name}</NavLink>
           </MenuItem>
         ))}
         </NavDropdown>

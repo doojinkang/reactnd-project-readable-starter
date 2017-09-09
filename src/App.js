@@ -34,6 +34,11 @@ class App extends Component {
     })
   }
 
+  nameByPath = (path) => {
+    const theTag = this.state.tags.find((tag) => (tag.path===path))
+    return theTag.name
+  }
+
   render = () => {
     console.log('App.render', this.props.posts)
     return (
@@ -50,7 +55,9 @@ class App extends Component {
           <Route path='/created/:tag'
             render={(props) => (
               <PostList {...props}
-                posts={this.props.posts.filter((post)=>(post.category===props.match.params.tag))}
+                posts={this.props.posts.filter(
+                  (post)=>(post.category===this.nameByPath(props.match.params.tag))
+                )}
               />
             )}
           />

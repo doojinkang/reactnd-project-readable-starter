@@ -14,6 +14,10 @@ const defaultData = {
         path: 'redux'
       },
       {
+        name: 'nanodegree',
+        path: 'nano'
+      },
+      {
         name: 'udacity',
         path: 'udacity'
       }
