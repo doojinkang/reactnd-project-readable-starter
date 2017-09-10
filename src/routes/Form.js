@@ -11,7 +11,12 @@ import { postAdd } from '../actions'
 
 class Form extends Component {
   state = {
-    categoryValue : ''
+    post: {
+      title: '',
+      body: '',
+      author: '',
+      category : ''
+    }
   }
 
   handleSubmit = (e) => {
@@ -26,8 +31,8 @@ class Form extends Component {
     }
     if (typeof value.category === 'undefined')
       value.category = this.props.categories[0].name
-    // console.log(value)
-    PostAPI.newPost(value.id, value.timestamp, value.title,
+      // console.log(value)
+      PostAPI.newPost(value.id, value.timestamp, value.title,
                     value.body, value.author, value.category).then( (data) => {
       console.log('API.newPost', data)
       this.props.addPost(data)
@@ -35,44 +40,51 @@ class Form extends Component {
     })
   }
 
-  // constructor(props) {
-  //   super(props)
-  //   const defaultCategory = props.categories[2].name
-  //   this.state = {
-  //     categoryValue : defaultCategory
-  //   }
-  // }
-
-  handleCategoryValue = (e) => {
-    const category = e.target.value
-    // console.log(category)
+  handleChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    console.log('handleChange', name, value)
     this.setState(() => ({
-      categoryValue: category
+      ...this.state,
+      'post' : {
+        ...this.state['post'],
+        [name] : value
+      }
     }))
-    // console.log(this.getState())
   }
 
   render() {
+    const post = this.state.post
+
     return (
       <div className='container'>
 
         <form action='' onSubmit={this.handleSubmit}>
           <div className='form-group'>
             <span className = 'label label-default'> Title </span>
-            <input type='text' className='form-control' name='title'/>
+            <input type='text' className='form-control' name='title'
+                value={post && post.title}
+                onChange={this.handleChange}
+            />
           </div>
           <div className='form-group'>
             <span className = 'label label-default'> Body </span>
-            <textarea className='form-control' name='body' rows='5'/>
+            <textarea className='form-control' name='body' rows='5'
+                value={post && post.body}
+                onChange={this.handleChange}
+            />
           </div>
           <div className='form-inline'>
             <span className = 'label label-default' style={{marginRight:'20px'}}> Author </span>
-            <input type='text' className='form-control' name='author'/>
+            <input type='text' className='form-control' name='author'
+                value={post && post.author}
+                onChange={this.handleChange}
+            />
             <span className = 'label label-default' style={{margin:'0 20px 0 50px'}}> Category </span>
             <select
-                    name='category'
-                    value={this.state.categoryValue}
-                    onChange={this.handleCategoryValue}>
+                name='category'
+                value={post.category}
+                onChange={this.handleChange} >
                 <option value='' disabled> Select </option>
             {
               this.props.categories.map((category) => (
