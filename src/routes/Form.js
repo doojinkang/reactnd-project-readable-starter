@@ -11,12 +11,27 @@ import { postAdd } from '../actions'
 
 class Form extends Component {
   state = {
+    isEditMode : false,
     post: {
       title: '',
       body: '',
       author: '',
       category : ''
     }
+  }
+
+  componentDidMount() {
+    // setState in constructor causes the Warning and not work at all
+    // Warning: setState(...): Can only update a mounted or mounting component.
+    // This usually means you called setState() on an unmounted component.
+    // This is a no-op. Please check the code for the Form component.
+    if (this.props.post) {
+      this.setState(() => ({
+        isEditMode : true,
+        post: this.props.post
+      }))
+    }
+    console.log('componentDidMount', this.state)
   }
 
   handleSubmit = (e) => {
@@ -57,7 +72,11 @@ class Form extends Component {
     const post = this.state.post
 
     return (
-      <div className='container'>
+      <div className={this.state.isEditMode ? 'container-fluid' : 'container'}>
+
+        <div>
+          Mode : {this.state.isEditMode? 'Edit': 'Create'}
+        </div>
 
         <form action='' onSubmit={this.handleSubmit}>
           <div className='form-group'>

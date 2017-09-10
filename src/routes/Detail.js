@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Modal } from 'react-bootstrap'
 
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
 
+import Form from './Form'
 import Comment from './Comment'
 
 import { postVote, commentAdd, commentVote } from '../actions'
 
 class Detail extends Component {
+
+  state = {
+    editModalOpen : false
+  }
 
   componentDidMount() {
     PostAPI.getComments(this.props.match.params.id).then( (data) => {
@@ -25,6 +31,18 @@ class Detail extends Component {
       const newVoteScore = data.voteScore
       this.props.votePost({id, newVoteScore})
     })
+  }
+
+  openEditModal = () => {
+    console.log('openEditModal')
+    this.setState(() => ({
+      editModalOpen: true,
+    }))
+  }
+  closeEditModal = () => {
+    this.setState(() => ({
+      editModalOpen: false,
+    }))
   }
 
   render() {
@@ -69,6 +87,8 @@ class Detail extends Component {
         <div style={{marginTop:'10px'}}>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "upVote")}>voteUp</button>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "downVote")}>voteDown</button>
+          <button className='btn btn-default' onClick={() => this.openEditModal()}>Edit</button>
+          <button className='btn btn-default'>Delete</button>
         </div>
 
         <hr/>
@@ -78,6 +98,22 @@ class Detail extends Component {
                    (comment)=>(comment.parentId===this.props.match.params.id))}
                  voteComment={this.props.voteComment}
         />
+
+        <Modal bsSize='large' show={this.state.editModalOpen} onHide={this.closeEditModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit {post && post.id}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form
+              categories={this.props.categories}
+              post={post}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <button onClick={this.closeEditModal}>Close</button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     )
   }

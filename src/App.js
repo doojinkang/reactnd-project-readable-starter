@@ -65,6 +65,7 @@ class App extends Component {
             render={(props) => (
               <Detail {...props}
                post={this.props.posts.find((post)=>(post.id===props.match.params.id))}
+               categories={this.state.categories}
               />
             )}
           />
