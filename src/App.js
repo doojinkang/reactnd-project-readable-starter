@@ -18,13 +18,13 @@ import 'bootstrap/dist/css/bootstrap-theme.css'
 
 class App extends Component {
   state = {
-    tags: []
+    categories: []
   }
 
   componentDidMount = () => {
-    PostAPI.getTags().then( (data) => {
-      console.log('API.getTags', data)
-      this.setState( {tags: data} )
+    PostAPI.getCategories().then( (data) => {
+      console.log('API.getCategories', data)
+      this.setState( {categories: data} )
     })
     PostAPI.getPosts().then( (data) => {
       console.log('API.getPosts', data)
@@ -35,8 +35,8 @@ class App extends Component {
   }
 
   nameByPath = (path) => {
-    const theTag = this.state.tags.find((tag) => (tag.path===path))
-    return theTag.name
+    const theCategory = this.state.categories.find((category) => (category.path===path))
+    return theCategory.name
   }
 
   render = () => {
@@ -44,7 +44,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Header tags={this.state.tags}/>
+          <Header categories={this.state.categories}/>
           <Route exact path='/' component={Home}/>
           <Route path='/about' component={About}/>
           <Route exact path='/created'
@@ -52,11 +52,11 @@ class App extends Component {
               <PostList {...props} posts={this.props.posts} />
             )}
           />
-          <Route path='/created/:tag'
+          <Route path='/created/:category'
             render={(props) => (
               <PostList {...props}
                 posts={this.props.posts.filter(
-                  (post)=>(post.category===this.nameByPath(props.match.params.tag))
+                  (post)=>(post.category===this.nameByPath(props.match.params.category))
                 )}
               />
             )}
@@ -71,7 +71,7 @@ class App extends Component {
           <Route path='/write'
             render={(props) => (
               <Form {...props}
-                tags={this.state.tags}
+                categories={this.state.categories}
               />
             )}
           />

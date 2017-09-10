@@ -61,7 +61,7 @@ class Detail extends Component {
           </div>
         </div>
         <div className='form-group'>
-          <span className = 'label label-default'> Tag </span>
+          <span className = 'label label-default'> Category </span>
           <div>
             { post && post.category}
           </div>

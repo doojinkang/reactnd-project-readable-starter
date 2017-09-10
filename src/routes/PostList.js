@@ -9,14 +9,14 @@ class PostList extends Component {
 
   render() {
     const { posts } = this.props
-    const { tag } = this.props.match.params
+    const { category } = this.props.match.params
 
     return (
       <div className='container'>
         <Grid>
           <Row className="show-grid">
             <Col xs={6} xsOffset={6}>
-              <strong>Tag : {tag ? tag : 'All'}</strong>
+              <strong>Category : {category ? category : 'All'}</strong>
             </Col>
             <Col xs={6} xsOffset={10}>
               <Link to='/write'>Submit a Story</Link>

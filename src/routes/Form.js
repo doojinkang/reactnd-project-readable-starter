@@ -11,7 +11,7 @@ import { postAdd } from '../actions'
 
 class Form extends Component {
   state = {
-    tagValue : ''
+    categoryValue : ''
   }
 
   handleSubmit = (e) => {
@@ -25,7 +25,7 @@ class Form extends Component {
       ...serializeform(e.target, { hash: true})
     }
     if (typeof value.category === 'undefined')
-      value.category = this.props.tags[0].name
+      value.category = this.props.categories[0].name
     // console.log(value)
     PostAPI.newPost(value.id, value.timestamp, value.title,
                     value.body, value.author, value.category).then( (data) => {
@@ -37,17 +37,17 @@ class Form extends Component {
 
   // constructor(props) {
   //   super(props)
-  //   const defaultTag = props.tags[2].name
+  //   const defaultCategory = props.categories[2].name
   //   this.state = {
-  //     tagValue : defaultTag
+  //     categoryValue : defaultCategory
   //   }
   // }
 
-  handleTagValue = (e) => {
-    const tag = e.target.value
-    // console.log(tag)
+  handleCategoryValue = (e) => {
+    const category = e.target.value
+    // console.log(category)
     this.setState(() => ({
-      tagValue: tag
+      categoryValue: category
     }))
     // console.log(this.getState())
   }
@@ -68,15 +68,15 @@ class Form extends Component {
           <div className='form-inline'>
             <span className = 'label label-default' style={{marginRight:'20px'}}> Author </span>
             <input type='text' className='form-control' name='author'/>
-            <span className = 'label label-default' style={{margin:'0 20px 0 50px'}}> Tag </span>
+            <span className = 'label label-default' style={{margin:'0 20px 0 50px'}}> Category </span>
             <select
                     name='category'
-                    value={this.state.tagValue}
-                    onChange={this.handleTagValue}>
+                    value={this.state.categoryValue}
+                    onChange={this.handleCategoryValue}>
                 <option value='' disabled> Select </option>
             {
-              this.props.tags.map((tag) => (
-                <option key={tag.name} value={tag.name}> {tag.name} </option>
+              this.props.categories.map((category) => (
+                <option key={category.name} value={category.name}> {category.name} </option>
               ))
             }
             </select>
