@@ -50,14 +50,14 @@ export const votePost = (id, option) =>
   }).then(res => res.json())
 
 // Need verify
-export const editPost = (id, title, body) =>
+export const editPost = (id, timestamp, title, body, author, category) =>
   fetch(`${api}/posts/${id}`, {
     method: 'PUT',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({title, body})
+    body: JSON.stringify({ id, timestamp, title, body, author, category })
   }).then(res => res.json())
 
 // Need verify
@@ -84,7 +84,7 @@ export const newComment = (id, timestamp, body, author, parentId) =>
     body: JSON.stringify({ id, timestamp, body, author, parentId })
   }).then(res => res.json())
 
-  export const voteComment = (id, option) =>
+export const voteComment = (id, option) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
