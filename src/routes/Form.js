@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import serializeform from 'form-serialize'
 import uuid from 'uuid'
 import base64 from 'uuid-base64'
 
@@ -39,20 +38,34 @@ class Form extends Component {
     const value = {
       id: base64.encode(uuid.v4()),
       timestamp: Date.now(),
-      title: 'noname title',
-      body: 'no content',
-      author: 'none',
-      ...serializeform(e.target, { hash: true})
+      ...this.state.post
     }
-    if (typeof value.category === 'undefined')
+    if (value.title === '')
+      value.title = 'noname title'
+    if (value.body === '')
+      value.body = 'no content'
+    if (value.author === '')
+      value.author = 'none'
+    if (value.category === '')
       value.category = this.props.categories[0].name
-      // console.log(value)
+    console.log(value)
+
+    if ( this.state.isEditMode ) {
+      PostAPI.editPost(value.id, value.timestamp, value.title,
+                       value.body, value.author, value.category).then( (data) => {
+        console.log('API.editPost', data)
+        this.props.addPost(data)
+        this.props.closeForm()
+      })
+    }
+    else {
       PostAPI.newPost(value.id, value.timestamp, value.title,
-                    value.body, value.author, value.category).then( (data) => {
-      console.log('API.newPost', data)
-      this.props.addPost(data)
-      this.props.history.push('/')
-    })
+                      value.body, value.author, value.category).then( (data) => {
+        console.log('API.newPost', data)
+        this.props.addPost(data)
+        this.props.history.push('/')
+      })
+    }
   }
 
   handleChange = (e) => {

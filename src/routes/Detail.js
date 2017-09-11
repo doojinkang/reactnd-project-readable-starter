@@ -105,6 +105,7 @@ class Detail extends Component {
           </Modal.Header>
           <Modal.Body>
             <Form
+              closeForm={this.closeEditModal}
               categories={this.props.categories}
               post={post}
             />
