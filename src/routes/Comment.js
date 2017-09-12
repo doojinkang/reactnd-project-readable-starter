@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Modal } from 'react-bootstrap'
 
 import serializeform from 'form-serialize'
 import uuid from 'uuid'
@@ -11,22 +12,78 @@ import { _dt } from '../lib/dateUtil'
 import { commentAdd } from '../actions'
 
 class Comment extends Component {
+  state = {
+    modalOpen : false,
+    modalTitle : '',
+    comment: {
+      body: '',
+      author: '',
+    }
+  }
+
+  openModal = (comment) => {
+    console.log('openModal', comment)
+    if ( typeof comment !== 'undefined') {
+      this.setState(() => ({
+        modalOpen: true,
+        modalTitle: 'Edit comment ' + comment.id,
+        comment: {
+          id: comment.id,
+          timestamp: comment.timestamp,
+          body: comment.body,
+          author: comment.author,
+          parentId: comment.parentId
+        }
+      }))
+    }
+    else {
+      this.setState(() => ({
+        modalOpen: true,
+        modalTitle: 'Create new comment',
+        comment: {
+          body: '',
+          author: '',
+          parentId: this.props.parentId
+        }
+      }))
+    }
+  }
+  closeModal = () => {
+    this.setState(() => ({
+      modalOpen: false,
+    }))
+  }
+
   handleSubmit = (e) => {
     e.preventDefault()
+
     const value = {
       id: base64.encode(uuid.v4()),
       timestamp: Date.now(),
-      body: 'no content',
-      author: 'none',
-      parentId: this.props.parentId,
-      ...serializeform(e.target, { hash: true})
+      ...this.state.comment
     }
+    if (value.body === '')
+      value.body = 'no comment'
+    if (value.author === '')
+      value.author = 'anyauthor'
     console.log(value)
-    PostAPI.newComment(value.id, value.timestamp,
-                    value.body, value.author, value.parentId).then( (data) => {
-      console.log('API.newComment', data)
-      this.props.addComment(data)
-    })
+
+    if ( typeof comment !== 'undefined') {
+      PostAPI.editComment(value.id, value.timestamp,
+        value.body, value.author, value.parentId).then( (data) => {
+        console.log('API.editComment', data)
+        this.props.addComment(data)
+        this.closeModal()
+      })
+    }
+    else {
+      PostAPI.newComment(value.id, value.timestamp,
+                      value.body, value.author, value.parentId).then( (data) => {
+        console.log('API.newComment', data)
+        this.props.addComment(data)
+        this.closeModal()
+      })
+    }
   }
 
   processVote = (id, option) => {
@@ -35,6 +92,19 @@ class Comment extends Component {
       const newVoteScore = data.voteScore
       this.props.voteComment({id, newVoteScore})
     })
+  }
+
+  handleChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    console.log('handleChange', name, value)
+    this.setState(() => ({
+      ...this.state,
+      'comment' : {
+        ...this.state['comment'],
+        [name] : value
+      }
+    }))
   }
 
   render() {
@@ -70,21 +140,45 @@ class Comment extends Component {
             <td>
               <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'upVote')}>voteUp</button>
               <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'downVote')}>voteDown</button>
+              <button className='btn btn-default' onClick={() => this.openModal(comment)}>Edit</button>
+              <button className='btn btn-default'>Delete</button>
             </td>
           </tr>
         ))}
           </tbody>
         </table>
 
+        <div>
+          <button className='btn btn-default' onClick={() => this.openModal()}>Create Comment</button>
+        </div>
+
+
+    <Modal bsSize='large' show={this.state.modalOpen} onHide={this.closeModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>{this.state.modalTitle}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
         <form action='' onSubmit={this.handleSubmit}>
           <div className='form-inline'>
             <span className = 'label label-default' style={{marginRight:'10px'}}> Author </span>
-            <input type='text' className='form-control' style={{marginRight:'20px'}} name='author'/>
+            <input type='text' className='form-control' style={{marginRight:'20px'}} name='author'
+                    value={this.state.comment.author}
+                    onChange={this.handleChange}
+            />
             <span className = 'label label-default' style={{marginRight:'10px'}}> Comment </span>
-            <input type='text' className='form-control' style={{marginRight:'20px'}} name='body'/>
+            <input type='text' className='form-control' style={{marginRight:'20px'}} name='body'
+                    value={this.state.comment.body}
+                    onChange={this.handleChange}
+            />
             <button className='btn btn-default'>Submit</button>
           </div>
         </form>
+      </Modal.Body>
+      <Modal.Footer>
+        <button onClick={this.closeModal}>Close</button>
+      </Modal.Footer>
+    </Modal>
+
 
       </div>
     );
