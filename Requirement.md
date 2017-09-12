@@ -7,9 +7,11 @@
   - actions : post => add, update, vote, delete
               comment => add, update, vote, delete
   - reducer : posts (처음에는 하나만)
+
+2. Create View
   - Form : calls newPost API and action addPost
 
-2. Detail View
+3. Detail View
 
   - src/routes/Detail.js
   - Data from store, id from props.match.params
@@ -22,11 +24,28 @@
         2. 가짜 데이터를 먼저 만들어 놓고,
           fetch 후 업데이트 하도록 하면 된다.
 
-  - show comment
-  - add comment
-    reducer now have state of post and comment
-  - vote : upvote, downvote
-  - edit, delete, vote
+  - show comment ............. ok
+  - add comment  ............. ok
+      reducer now have state of post and comment
+  - vote ..................... ok
+      upvote, downvote
+
+4. Edit View (by Create View)
+
+  - edit
+      modal (both post and comment)
+
+5. ETC
+
+  - sort
+      created, trending (both post and comment)
+  - delete
+      (both post and comment)
+
+  - category 추가 시 적용 확인 ok
+    /write 에서 category 가 default 로 선택되지 않음
+      ==> history 를 통해서 가능할 것 같은데...
+
 
   Detail 문제
     1. getDetail Fetch 후에는 state 에만 저장이 가능함
@@ -41,6 +60,26 @@
     에서 두개의 reducer 에 모두 action 이 전달 된다.
     reducer.post POST_VOTE
     reducer.comment POST_VOTE // 이것은 무시됨
+
+  Form 에서 ...serializeform(e.target, { hash: true }) 사용하는 경우,
+    blank 데이터는 object 에 포함되지 않음
+
+  Post Form 과 Comment Form 이 다른 것
+    const value = {
+      id: base64.encode(uuid.v4()),
+      timestamp: Date.now(),
+      ...this.state.post or comment
+    }
+
+  Post Form Edit : this.state.post 에 값이 들어감
+                   id, timestamp 는 이 값으로 overwrite 됨
+  Post Form New  : this.state.post 에 값이 들어가지 않음
+                   id, timestamp 는 설정하지 않음
+  Comment Form Edit : this.state.comment 값이 들어감
+                      id, timestamp 는 이 값으로 overwrite 됨
+  Comment Form New  : this.state.comment is null
+                      id, timestamp 는 this.state.comment 는 없고
+                      parentId 는 설정
 
 # Data
 
