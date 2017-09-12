@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { POST_ADD, POST_VOTE, COMMENT_ADD, COMMENT_VOTE } from '../actions'
+import { POST_ADD, POST_VOTE, COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions'
 
 function post( state = {}, action) {
   console.log('reducer.post', action.type)
@@ -33,6 +33,11 @@ function comment( state = {}, action) {
     return {
       ...state,
       [action.id]: {...state[action.id], voteScore: action.newVoteScore }
+    }
+  case COMMENT_DELETE:
+    return {
+      ...state,
+      [action.id]: {...state[action.id], deleted: true }
     }
   default:
     return state

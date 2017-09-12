@@ -9,7 +9,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
 
-import { commentAdd } from '../actions'
+import { commentAdd, commentDelete } from '../actions'
 
 class Comment extends Component {
   state = {
@@ -94,6 +94,14 @@ class Comment extends Component {
     })
   }
 
+  processDelete = (id) => {
+    PostAPI.deleteComment(id).then( (data) => {
+      console.log('API.deleteComment', data)
+      this.props.deleteComment({id})
+    })
+  }
+
+
   handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
@@ -141,7 +149,7 @@ class Comment extends Component {
               <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'upVote')}>voteUp</button>
               <button className='btn btn-default' onClick={() => this.processVote(comment.id, 'downVote')}>voteDown</button>
               <button className='btn btn-default' onClick={() => this.openModal(comment)}>Edit</button>
-              <button className='btn btn-default'>Delete</button>
+              <button className='btn btn-default' onClick={() => this.processDelete(comment.id)}>Delete</button>
             </td>
           </tr>
         ))}
@@ -188,6 +196,7 @@ class Comment extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     addComment : (data) => dispatch(commentAdd(data)),
+    deleteComment : (data) => dispatch(commentDelete(data))
   }
 }
 

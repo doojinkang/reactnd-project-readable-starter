@@ -95,7 +95,11 @@ class Detail extends Component {
 
         <Comment parentId={this.props.match.params.id}
                  comments={this.props.comments.filter(
-                   (comment)=>(comment.parentId===this.props.match.params.id))}
+                   (comment)=>(
+                     comment.parentId===this.props.match.params.id &&
+                     ( typeof comment.deleted === 'undefined' ||
+                     comment.deleted === false )
+                   ))}
                  voteComment={this.props.voteComment}
         />
 
