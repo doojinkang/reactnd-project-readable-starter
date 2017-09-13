@@ -51,7 +51,6 @@ class App extends Component {
             render={(props) => (
               <PostList {...props}
                 posts={this.props.posts.filter((post)=>(
-                  typeof post.deleted === 'undefined' ||
                   post.deleted === false
                 ))
               } />
@@ -62,8 +61,7 @@ class App extends Component {
               <PostList {...props}
                 posts={this.props.posts.filter((post)=>(
                   post.category===this.nameByPath(props.match.params.category) &&
-                  ( typeof post.deleted === 'undefined' ||
-                  post.deleted === false )
+                  post.deleted === false
                 ))
               } />
             )}
@@ -89,7 +87,7 @@ class App extends Component {
   }
 }
 
-function mapStateToProps( {post, comment} ) {
+function mapStateToProps( {post} ) {
   return {
     posts: Object.keys(post).map((key) => (
           post[key]

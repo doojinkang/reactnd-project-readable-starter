@@ -8,21 +8,12 @@ import { _dt } from '../lib/dateUtil'
 import Form from './Form'
 import Comment from './Comment'
 
-import { postVote, postDelete, commentAdd, commentVote } from '../actions'
+import { postVote, postDelete } from '../actions'
 
 class Detail extends Component {
 
   state = {
     editModalOpen : false
-  }
-
-  componentDidMount() {
-    PostAPI.getComments(this.props.match.params.id).then( (data) => {
-      console.log('API.getComments', data)
-      data.map((comment)=>{
-        this.props.addComment(comment)
-      })
-    })
   }
 
   processVote = (id, option) => {
@@ -101,14 +92,8 @@ class Detail extends Component {
 
         <hr/>
 
-        <Comment parentId={this.props.match.params.id}
-                 comments={this.props.comments.filter(
-                   (comment)=>(
-                     comment.parentId===this.props.match.params.id &&
-                     ( typeof comment.deleted === 'undefined' ||
-                     comment.deleted === false )
-                   ))}
-                 voteComment={this.props.voteComment}
+        <Comment
+          parentId={this.props.match.params.id}
         />
 
         <Modal bsSize='large' show={this.state.editModalOpen} onHide={this.closeEditModal}>
@@ -132,22 +117,12 @@ class Detail extends Component {
   }
 }
 
-function mapStateToProps( {comment} ) {
-  return {
-    comments: Object.keys(comment).map((key) => (
-          comment[key]
-        ))
-  }
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     votePost : (data) => dispatch((postVote(data))),
     deletePost : (data) => dispatch((postDelete(data))),
-    addComment : (data) => dispatch(commentAdd(data)),
-    voteComment : (data) => dispatch(commentVote(data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Detail)
+export default connect(undefined, mapDispatchToProps)(Detail)
 

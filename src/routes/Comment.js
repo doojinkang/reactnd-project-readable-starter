@@ -9,7 +9,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
 
-import { commentAdd, commentDelete } from '../actions'
+import { commentAdd, commentVote, commentDelete } from '../actions'
 
 class Comment extends Component {
   state = {
@@ -19,6 +19,15 @@ class Comment extends Component {
       body: '',
       author: '',
     }
+  }
+
+  componentDidMount() {
+    PostAPI.getComments(this.props.parentId).then( (data) => {
+      console.log('API.getComments', data)
+      data.map((comment)=>{
+        this.props.addComment(comment)
+      })
+    })
   }
 
   openModal = (comment) => {
@@ -131,7 +140,10 @@ class Comment extends Component {
           </thead>
           <tbody>
 
-        {comments.map((comment)=>(
+        {comments.filter((comment)=>(
+                  comment.parentId===this.props.parentId &&
+                  comment.deleted === false))
+                  .map((comment)=>(
           <tr key={ comment.id }>
             <td>
               { comment.body }
@@ -193,12 +205,21 @@ class Comment extends Component {
   }
 }
 
+function mapStateToProps( {comment} ) {
+  return {
+    comments: Object.keys(comment).map((key) => (
+          comment[key]
+        ))
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addComment : (data) => dispatch(commentAdd(data)),
+    voteComment : (data) => dispatch(commentVote(data)),
     deleteComment : (data) => dispatch(commentDelete(data))
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(Comment)
+export default connect(mapStateToProps, mapDispatchToProps)(Comment)
 
