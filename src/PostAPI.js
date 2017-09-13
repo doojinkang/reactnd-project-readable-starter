@@ -67,8 +67,9 @@ export const deletePost = (id) =>
     headers: {
       ...headers,
       'Content-Type': 'application/json'
-    }
-  }).then(res => res.json())
+    },
+    body: JSON.stringify({id})
+  }).then(res => res)
 
 export const getComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
