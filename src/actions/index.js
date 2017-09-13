@@ -1,10 +1,11 @@
 export const POST_ADD = 'POST_ADD'
 export const POST_VOTE = 'POST_VOTE'
+export const POST_DELETE = 'POST_DELETE'
 export const COMMENT_ADD = 'COMMENT_ADD'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_DELETE = 'COMMENT_DELETE'
 
-export function postAdd ({ id, timestamp, title, body, author, voteScore, category }) {
+export function postAdd ({ id, timestamp, title, body, author, voteScore, category, deleted }) {
   return {
     type: POST_ADD,
     id,
@@ -13,7 +14,8 @@ export function postAdd ({ id, timestamp, title, body, author, voteScore, catego
     body,
     author,
     voteScore,
-    category
+    category,
+    deleted
   }
 }
 
@@ -25,7 +27,15 @@ export function postVote ({ id, newVoteScore }) {
   }
 }
 
-export function commentAdd({ id, parentId, timestamp, body, author, voteScore}) {
+export function postDelete ({id}) {
+  return {
+    type: POST_DELETE,
+    id,
+  }
+}
+
+
+export function commentAdd({ id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted}) {
   return {
     type: COMMENT_ADD,
     id,
@@ -33,7 +43,9 @@ export function commentAdd({ id, parentId, timestamp, body, author, voteScore}) 
     timestamp,
     body,
     author,
-    voteScore
+    voteScore,
+    deleted,
+    parentDeleted
   }
 }
 
