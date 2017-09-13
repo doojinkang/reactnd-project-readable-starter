@@ -1,5 +1,7 @@
 # Story list
 
+각 뷰마다 질문 리스트를 만들어 보자.
+
 1. Default Root List View
 
   - css, html : bootstrap, router4
@@ -30,22 +32,11 @@
   - vote ..................... ok
       upvote, downvote
 
-4. Edit View (by Create View)
-
-  - edit
-      modal (both post and comment)
-
-5. ETC
-
-  - sort
-      created, trending (both post and comment)
-  - delete
-      (both post and comment)
-
-  - category 추가 시 적용 확인 ok
-    /write 에서 category 가 default 로 선택되지 않음
-      ==> history 를 통해서 가능할 것 같은데...
-
+      API.votePost 후
+        this.props.votePost({id, newVoteScore})
+        에서 두개의 reducer 에 모두 action 이 전달 된다. (질문)
+        reducer.post POST_VOTE
+        reducer.comment POST_VOTE // 이것은 무시됨
 
   Detail 문제
     1. getDetail Fetch 후에는 state 에만 저장이 가능함
@@ -54,32 +45,50 @@
     3. App 으로부터 prop 을 받는 경우에도 2번과 같은 문제 발생
        ==> post && post.title 로 출력
        object 를 만드는 경우 default 값을 설정할 수 있으면
+       state 에 디폴트 값을 '' 으로 설정할 수도 있다. (질문)
 
-  API.votePost 후
-    this.props.votePost({id, newVoteScore})
-    에서 두개의 reducer 에 모두 action 이 전달 된다.
-    reducer.post POST_VOTE
-    reducer.comment POST_VOTE // 이것은 무시됨
 
-  Form 에서 ...serializeform(e.target, { hash: true }) 사용하는 경우,
-    blank 데이터는 object 에 포함되지 않음
+4. Edit View (by Create View)
+      handling state is same in edit or create view   (질문)
+      get data from server and update state
 
-  Post Form 과 Comment Form 이 다른 것
-    const value = {
-      id: base64.encode(uuid.v4()),
-      timestamp: Date.now(),
-      ...this.state.post or comment
-    }
+      modal (both post and comment)
 
-  Post Form Edit : this.state.post 에 값이 들어감
-                   id, timestamp 는 이 값으로 overwrite 됨
-  Post Form New  : this.state.post 에 값이 들어가지 않음
-                   id, timestamp 는 설정하지 않음
-  Comment Form Edit : this.state.comment 값이 들어감
+      Form 에서 ...serializeform(e.target, { hash: true }) 사용하는 경우,
+        blank 데이터는 object 에 포함되지 않음
+
+      Post Form 과 Comment Form 이 다른 것
+        const value = {
+          id: base64.encode(uuid.v4()),
+          timestamp: Date.now(),
+          ...this.state.post or comment
+        }
+
+      Post Form Edit : this.state.post 에 값이 들어감
                       id, timestamp 는 이 값으로 overwrite 됨
-  Comment Form New  : this.state.comment is null
-                      id, timestamp 는 this.state.comment 는 없고
-                      parentId 는 설정
+      Post Form New  : this.state.post 에 값이 들어가지 않음
+                      id, timestamp 는 설정하지 않음
+      Comment Form Edit : this.state.comment 값이 들어감
+                          id, timestamp 는 이 값으로 overwrite 됨
+      Comment Form New  : this.state.comment is null
+                          id, timestamp 는 this.state.comment 는 없고
+                          parentId 는 설정
+
+
+5. delete (both post and comment)
+      implement set flag deleted true
+      without delete property of state object
+      ==> Object spread 같은 것으로 해결하고 싶음...  (질문)
+
+  - sort
+      created, trending (both post and comment)
+
+  - category 추가 시 적용 확인 ok
+    /write 에서 category 가 default 로 선택되지 않음
+      ==> history 를 통해서 가능할 것 같은데...
+
+
+
 
 # Data
 
