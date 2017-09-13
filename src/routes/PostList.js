@@ -5,13 +5,11 @@ import {Grid, Row, Col } from 'react-bootstrap'
 
 import { _dt } from '../lib/dateUtil'
 
-class PostList extends Component {
+const PostList = (props) => {
+  const { posts } = props
+  const { category } = props.match.params
 
-  render() {
-    const { posts } = this.props
-    const { category } = this.props.match.params
-
-    return (
+  return (
       <div className='container'>
         <Grid>
           <Row className="show-grid">
@@ -35,7 +33,7 @@ class PostList extends Component {
             </tr>
           </thead>
           <tbody>
-           { posts.map( (post) => (
+          { posts.map( (post) => (
             <tr key={post.id}>
               <td>
                 <Link to={`/detail/${post.id}`}>{ post.title }</Link>
@@ -55,9 +53,8 @@ class PostList extends Component {
         </table>
 
       </div>
-    )
-  }
-}
+  );
+};
 
-export default PostList
+export default PostList;
 
