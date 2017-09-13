@@ -8,7 +8,7 @@ import { _dt } from '../lib/dateUtil'
 import Form from './Form'
 import Comment from './Comment'
 
-import { postVote, commentAdd, commentVote } from '../actions'
+import { postVote, postDelete, commentAdd, commentVote } from '../actions'
 
 class Detail extends Component {
 
@@ -30,6 +30,14 @@ class Detail extends Component {
       console.log('API.votePost', data)
       const newVoteScore = data.voteScore
       this.props.votePost({id, newVoteScore})
+    })
+  }
+
+  processDelete = (id) => {
+    PostAPI.deletePost(id).then( (data) => {
+      console.log('API.deletePost', data)
+      this.props.deletePost({id})
+      this.props.history.goBack()
     })
   }
 
@@ -88,7 +96,7 @@ class Detail extends Component {
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "upVote")}>voteUp</button>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "downVote")}>voteDown</button>
           <button className='btn btn-default' onClick={() => this.openEditModal()}>Edit</button>
-          <button className='btn btn-default'>Delete</button>
+          <button className='btn btn-default' onClick={() => this.processDelete(post.id)}>Delete</button>
         </div>
 
         <hr/>
@@ -135,6 +143,7 @@ function mapStateToProps( {comment} ) {
 function mapDispatchToProps(dispatch) {
   return {
     votePost : (data) => dispatch((postVote(data))),
+    deletePost : (data) => dispatch((postDelete(data))),
     addComment : (data) => dispatch(commentAdd(data)),
     voteComment : (data) => dispatch(commentVote(data))
   }
