@@ -49,16 +49,23 @@ class App extends Component {
           <Route path='/about' component={About}/>
           <Route exact path='/created'
             render={(props) => (
-              <PostList {...props} posts={this.props.posts} />
+              <PostList {...props}
+                posts={this.props.posts.filter((post)=>(
+                  typeof post.deleted === 'undefined' ||
+                  post.deleted === false
+                ))
+              } />
             )}
           />
           <Route path='/created/:category'
             render={(props) => (
               <PostList {...props}
-                posts={this.props.posts.filter(
-                  (post)=>(post.category===this.nameByPath(props.match.params.category))
-                )}
-              />
+                posts={this.props.posts.filter((post)=>(
+                  post.category===this.nameByPath(props.match.params.category) &&
+                  ( typeof post.deleted === 'undefined' ||
+                  post.deleted === false )
+                ))
+              } />
             )}
           />
           <Route path='/detail/:id'
