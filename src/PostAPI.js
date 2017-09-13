@@ -1,4 +1,4 @@
-const api = "http://localhost:5001"
+const api = "http://localhost:3001"
 
 // Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token
@@ -60,7 +60,7 @@ export const editPost = (id, timestamp, title, body, author, category) =>
     body: JSON.stringify({ id, timestamp, title, body, author, category })
   }).then(res => res.json())
 
-// Need verify
+// verified
 export const deletePost = (id) =>
   fetch(`${api}/posts/${id}`, {
     method: 'DELETE',
@@ -69,7 +69,7 @@ export const deletePost = (id) =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({id})
-  }).then(res => res)
+  }).then(res => res.json())
 
 export const getComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })

@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const express = require('express')
-const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const logger = require('morgan')
@@ -15,11 +14,11 @@ const app = express()
 
 app.use(logger('dev'))
 
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static('public'))
 app.use(cors())
 
 
-app.get('/usage', (req, res) => {
+app.get('/', (req, res) => {
   const help = `
   <pre>
     Welcome to the Udacity Readable API!
@@ -198,10 +197,7 @@ app.get('/posts/:id', (req, res) => {
 
 app.delete('/posts/:id', (req, res) => {
     posts.disable(req.token, req.params.id)
-      .then(
-          (post) => {
-              comments.disableByParent(req.token, post)
-          })
+      .then(post => comments.disableByParent(req.token, post))
       .then(
           (data) => res.send(data),
           (error) => {
