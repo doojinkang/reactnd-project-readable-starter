@@ -2,13 +2,12 @@ import { combineReducers } from 'redux'
 import { POST_ADD, POST_VOTE, POST_DELETE, COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions'
 
 function post( state = {}, action) {
-  console.log('reducer.post', action.type)
+  console.log('reducer.post', action)
   switch (action.type) {
   case POST_ADD:
-    const { id, timestamp, title, body, author, category, voteScore, deleted } = action
     return {
       ...state,
-      [id]: {id, timestamp, title, body, author, category, voteScore, deleted}
+      [action.id]: action.post
     }
   case POST_VOTE:
     return {

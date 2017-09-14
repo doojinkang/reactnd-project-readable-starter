@@ -97,7 +97,7 @@ function mapStateToProps( {post} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost : (data) => dispatch(postAdd(data)),
+    addPost : (data) => dispatch(postAdd({id: data.id, post:data})),
   }
 }
 

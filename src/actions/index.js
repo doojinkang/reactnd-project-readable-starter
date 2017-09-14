@@ -5,17 +5,11 @@ export const COMMENT_ADD = 'COMMENT_ADD'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_DELETE = 'COMMENT_DELETE'
 
-export function postAdd ({ id, timestamp, title, body, author, voteScore, category, deleted }) {
+export function postAdd ({ id, post }) {
   return {
     type: POST_ADD,
     id,
-    timestamp,
-    title,
-    body,
-    author,
-    voteScore,
-    category,
-    deleted
+    post
   }
 }
 
