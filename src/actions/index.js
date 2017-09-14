@@ -34,18 +34,11 @@ export function postDelete ({id}) {
   }
 }
 
-
-export function commentAdd({ id, parentId, timestamp, body, author, voteScore, deleted, parentDeleted}) {
+export function commentAdd({id, comment}) {
   return {
     type: COMMENT_ADD,
     id,
-    parentId,
-    timestamp,
-    body,
-    author,
-    voteScore,
-    deleted,
-    parentDeleted
+    comment
   }
 }
 

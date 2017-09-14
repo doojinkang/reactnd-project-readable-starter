@@ -26,13 +26,12 @@ function post( state = {}, action) {
 }
 
 function comment( state = {}, action) {
-  console.log('reducer.comment', action.type)
+  console.log('reducer.comment', action)
   switch (action.type) {
   case COMMENT_ADD:
-    const { id, timestamp, body, author, parentId, voteScore, deleted, parentDeleted } = action
     return {
       ...state,
-      [id]: {id, timestamp, body, author, parentId, voteScore, deleted, parentDeleted}
+      [action.id]: action.comment
     }
   case COMMENT_VOTE:
     return {

@@ -215,7 +215,7 @@ function mapStateToProps( {comment} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addComment : (data) => dispatch(commentAdd(data)),
+    addComment : (data) => dispatch(commentAdd({id: data.id, comment:data})),
     voteComment : (data) => dispatch(commentVote(data)),
     deleteComment : (data) => dispatch(commentDelete(data))
   }
