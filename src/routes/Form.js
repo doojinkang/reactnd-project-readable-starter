@@ -11,12 +11,7 @@ import { postAdd } from '../actions'
 class Form extends Component {
   state = {
     isEditMode : false,
-    post: {
-      title: '',
-      body: '',
-      author: '',
-      category : ''
-    }
+    post: {}
   }
 
   componentDidMount() {
@@ -28,6 +23,19 @@ class Form extends Component {
       this.setState(() => ({
         isEditMode : true,
         post: this.props.post
+      }))
+    }
+    else {
+      this.setState(() => ({
+        isEditMode : false,
+        post: {
+          title : '',
+          body : '',
+          author : '',
+          category : '',
+          // id, timestamp is set on handleSubmit
+          // deleted, voteScore is set on server
+        }
       }))
     }
     console.log('componentDidMount', this.state)

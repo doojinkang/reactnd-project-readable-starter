@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 
-import serializeform from 'form-serialize'
 import uuid from 'uuid'
 import base64 from 'uuid-base64'
 
@@ -15,10 +14,7 @@ class Comment extends Component {
   state = {
     modalOpen : false,
     modalTitle : '',
-    comment: {
-      body: '',
-      author: '',
-    }
+    comment: {}
   }
 
   componentDidMount() {
@@ -36,13 +32,7 @@ class Comment extends Component {
       this.setState(() => ({
         modalOpen: true,
         modalTitle: 'Edit comment ' + comment.id,
-        comment: {
-          id: comment.id,
-          timestamp: comment.timestamp,
-          body: comment.body,
-          author: comment.author,
-          parentId: comment.parentId
-        }
+        comment
       }))
     }
     else {
@@ -53,10 +43,13 @@ class Comment extends Component {
           body: '',
           author: '',
           parentId: this.props.parentId
+          // id, timestamp is set on handleSubmit
+          // deleted, parentDeleted, voteScore is set on server
         }
       }))
     }
   }
+
   closeModal = () => {
     this.setState(() => ({
       modalOpen: false,
@@ -71,9 +64,9 @@ class Comment extends Component {
       timestamp: Date.now(),
       ...this.state.comment
     }
-    if (value.body === '')
+    if (value.body.trim() === '')
       value.body = 'no comment'
-    if (value.author === '')
+    if (value.author.trim() === '')
       value.author = 'anyauthor'
     console.log(value)
 
@@ -87,7 +80,7 @@ class Comment extends Component {
     }
     else {
       PostAPI.newComment(value.id, value.timestamp,
-                      value.body, value.author, value.parentId).then( (data) => {
+        value.body, value.author, value.parentId).then( (data) => {
         console.log('API.newComment', data)
         this.props.addComment(data)
         this.closeModal()
