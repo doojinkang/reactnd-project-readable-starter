@@ -6,6 +6,7 @@ import base64 from 'uuid-base64'
 
 import * as PostAPI from '../PostAPI'
 
+import Toast from '../components/Toast'
 import { postAdd } from '../actions'
 
 class Form extends Component {
@@ -48,14 +49,23 @@ class Form extends Component {
       timestamp: Date.now(),
       ...this.state.post
     }
-    if (value.title === '')
-      value.title = 'noname title'
-    if (value.body === '')
-      value.body = 'no content'
-    if (value.author === '')
-      value.author = 'none'
-    if (value.category === '')
-      value.category = this.props.categories[0].name
+    if (value.title.trim() === '') {
+      this.toast.show('Message', 'Enter Title')
+      return
+    }
+    if (value.body.trim() === '') {
+      this.toast.show('Message', 'Enter Body')
+      return
+    }
+    if (value.author.trim() === '') {
+      this.toast.show('Message', 'Enter Author')
+      return
+    }
+    if (value.category === '') {
+      this.toast.show('Message', 'Select Category')
+      return
+      // value.category = this.props.categories[0].name
+    }
     console.log(value)
 
     if ( this.state.isEditMode ) {
@@ -140,6 +150,8 @@ class Form extends Component {
             </span>
           </div>
         </form>
+
+        <Toast onRef={ref => (this.toast = ref)}/>
 
       </div>
     )

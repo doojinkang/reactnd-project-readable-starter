@@ -8,6 +8,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
 
+import Toast from '../components/Toast'
 import { commentAdd, commentVote, commentDelete } from '../actions'
 
 class Comment extends Component {
@@ -64,10 +65,14 @@ class Comment extends Component {
       timestamp: Date.now(),
       ...this.state.comment
     }
-    if (value.body.trim() === '')
-      value.body = 'no comment'
-    if (value.author.trim() === '')
-      value.author = 'anyauthor'
+    if (value.body.trim() === '') {
+      this.toast.show('Message', 'Enter Comment')
+      return
+    }
+    if (value.author.trim() === '') {
+      this.toast.show('Message', 'Enter Author')
+      return
+    }
     console.log(value)
 
     if ( typeof comment !== 'undefined') {
@@ -192,6 +197,7 @@ class Comment extends Component {
       </Modal.Footer>
     </Modal>
 
+      <Toast onRef={ref => (this.toast = ref)}/>
 
       </div>
     );
