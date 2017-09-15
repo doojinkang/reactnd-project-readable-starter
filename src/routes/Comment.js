@@ -7,6 +7,7 @@ import base64 from 'uuid-base64'
 
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
+import { sortGenerator } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
 import { commentAdd, commentVote, commentDelete } from '../actions'
@@ -15,6 +16,8 @@ class Comment extends Component {
   state = {
     modalOpen : false,
     modalTitle : '',
+    sortBy: 'timestamp',  // or 'voteScore'
+    order: 'descending',  // or 'ascending'
     comment: {}
   }
 
@@ -122,8 +125,25 @@ class Comment extends Component {
     }))
   }
 
+  handleOrder(sortBy) {
+    console.log('handleOrder', sortBy, this.state.order)
+    if ( this.state.sortBy === sortBy ) {
+      this.setState(() => ({
+        order: this.state.order === 'ascending' ? 'decending' : 'ascending',
+      }))
+    }
+    else {
+      this.setState(() => ({
+        sortBy: this.state.sortBy === 'timestamp' ? 'voteScore' : 'timestamp',
+        order: 'descending'
+      }))
+    }
+  }
+
   render() {
     const {comments} = this.props
+    comments.sort(sortGenerator(this.state.sortBy, this.state.order))
+
     return (
       <div>
         <table className='table table-bordered table-hover'>
@@ -131,9 +151,18 @@ class Comment extends Component {
             <tr>
               <th>Comment</th>
               <th>Author</th>
-              <th>Date</th>
-              <th>vote</th>
-              <th> </th>
+              <th>
+                <button className='btn, btn-default'
+                        onClick={() => this.handleOrder('timestamp')}
+                > Date </button>
+                { this.state.sortBy === 'timestamp' ? this.state.order : '' }
+              </th>
+              <th>
+                <button className='btn, btn-default'
+                        onClick={() => this.handleOrder('voteScore')}
+                > voteScore </button>
+                { this.state.sortBy === 'voteScore' ? this.state.order : '' }
+              </th>
             </tr>
           </thead>
           <tbody>
