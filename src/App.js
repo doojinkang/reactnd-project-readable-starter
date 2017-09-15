@@ -34,36 +34,24 @@ class App extends Component {
     })
   }
 
-  nameByPath = (path) => {
-    const theCategory = this.state.categories.find((category) => (category.path===path))
-    return theCategory.name
-  }
-
   render = () => {
-    console.log('App.render', this.props.posts)
+    console.log('App.render', this.props)
     return (
       <Router>
         <div>
           <Header categories={this.state.categories}/>
+          {/* Route component (Home, About) has props history, location, match */}
           <Route exact path='/' component={Home}/>
           <Route path='/about' component={About}/>
-          <Route exact path='/created'
+          {/* This case pass props history, location, match to PostList via {...props} */}
+          <Route path='/created/:catPath?'
             render={(props) => (
               <PostList {...props}
                 posts={this.props.posts.filter((post)=>(
                   post.deleted === false
-                ))
-              } />
-            )}
-          />
-          <Route path='/created/:category'
-            render={(props) => (
-              <PostList {...props}
-                posts={this.props.posts.filter((post)=>(
-                  post.category===this.nameByPath(props.match.params.category) &&
-                  post.deleted === false
-                ))
-              } />
+                ))}
+                categories={this.state.categories}
+              />
             )}
           />
           <Route path='/detail/:id'

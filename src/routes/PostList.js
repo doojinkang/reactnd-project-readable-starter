@@ -5,16 +5,31 @@ import {Grid, Row, Col } from 'react-bootstrap'
 
 import { _dt } from '../lib/dateUtil'
 
-const PostList = (props) => {
-  const { posts } = props
-  const { category } = props.match.params
+class PostList extends Component {
 
-  return (
+  nameByPath(path) {
+    const { categories } = this.props
+    if ( categories && categories.length > 0 ) {
+      const theCategory = categories.find((category) => (category.path===path))
+      return theCategory.name
+    }
+    else {
+      return undefined
+    }
+  }
+
+  render() {
+    const { posts, categories } = this.props
+    const { catPath } = this.props.match.params
+    const filteredPost = catPath ?
+          posts.filter((post)=>(post.category===this.nameByPath(catPath))) :
+          posts
+    return (
       <div className='container'>
         <Grid>
           <Row className="show-grid">
             <Col xs={6} xsOffset={6}>
-              <strong>Category : {category ? category : 'All'}</strong>
+              <strong>Category : {catPath ? this.nameByPath(catPath) : 'All'}</strong>
             </Col>
             <Col xs={6} xsOffset={10}>
               <Link to='/write'>Submit a Story</Link>
@@ -33,7 +48,7 @@ const PostList = (props) => {
             </tr>
           </thead>
           <tbody>
-          { posts.map( (post) => (
+          { filteredPost.map( (post) => (
             <tr key={post.id}>
               <td>
                 <Link to={`/detail/${post.id}`}>{ post.title }</Link>
@@ -53,8 +68,9 @@ const PostList = (props) => {
         </table>
 
       </div>
-  );
-};
+    )
+  }
+}
 
 export default PostList;
 
