@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { Navbar } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Header = (props) => (
-  <Navbar default collapseOnSelect>
+  <Navbar>
     <Navbar.Header>
       <Navbar.Brand>
         Readable SNS
@@ -11,21 +11,17 @@ const Header = (props) => (
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
-      <Nav>
-        <MenuItem>
-          <NavLink to='/'>Home</NavLink>
-        </MenuItem>
-        <MenuItem>
-          <NavLink to='/about'>About</NavLink>
-        </MenuItem>
-        <NavDropdown title="Categories" id="basic-nav-dropdown">
-        {props.categories.map((category) => (
-          <MenuItem key={category.name}>
-            <NavLink to={`/created/${category.path}`}>{category.name}</NavLink>
-          </MenuItem>
-        ))}
-        </NavDropdown>
-      </Nav>
+      <Navbar.Text>
+        <Link to='/'>ALL</Link>
+      </Navbar.Text>
+    {props.categories.map((category) => (
+      <Navbar.Text key={category.name}>
+        <Link to={`/created/${category.path}`}>{category.name}</Link>
+      </Navbar.Text>
+    ))}
+      <Navbar.Text pullRight>
+        <Link to='/about'>About</Link>
+      </Navbar.Text>
     </Navbar.Collapse>
   </Navbar>
 )
