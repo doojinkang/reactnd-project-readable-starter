@@ -1,16 +1,21 @@
 import React from 'react'
-import Toast from '../components/Toast'
 
 const About = () => {
   return (
     <div className='container'>
-      README.md
-      <br/>
-      <Toast
-        onRef={ref => (this.toast = ref)}
-      />
-      <button class='btn, btn-default' onClick={() => this.toast.show('Message', 'Hello world')}>Open</button>
-      <button class='btn, btn-default'>Close</button>
+      <div className="row vertical-center-row">
+        <div className="text-center col-md-4 col-md-offset-4">
+          <div>
+            Udacity Readable SNS project
+          </div>
+          <div>
+            Based On React/Redux
+          </div>
+          <div style={{marginTop:'20px'}}>
+            Doojin Kang
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
