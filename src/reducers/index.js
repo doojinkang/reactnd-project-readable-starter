@@ -15,10 +15,8 @@ function post( state = {}, action) {
       [action.id]: {...state[action.id], voteScore: action.newVoteScore }
     }
   case POST_DELETE:
-    return {
-      ...state,
-      [action.id]: {...state[action.id], deleted: true }
-    }
+    let  {[action.id]: deleted, ...newState} = state;
+    return newState;
   default:
     return state
   }
@@ -38,10 +36,8 @@ function comment( state = {}, action) {
       [action.id]: {...state[action.id], voteScore: action.newVoteScore }
     }
   case COMMENT_DELETE:
-    return {
-      ...state,
-      [action.id]: {...state[action.id], deleted: true }
-    }
+    let  {[action.id]: deleted, ...newState} = state;
+    return newState;
   default:
     return state
   }
