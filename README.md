@@ -1,99 +1,54 @@
-# Readable API Server
+# Readable SNS project
 
-## Installation
+## Installation and Launching
 
-Install packages: `npm install`
-Launch server: `node server`
-Unless modified in `config.js` server will use port 5001
+- Download source code
+  - `git clone git@github.com:doojinkang/reactnd-readable.git`
+- Install packages:
+  - `cd reactnd-readable; npm install`
 
+- Launch server:
+  - `node server`
+  - Unless modified in `config.js` server will use port 3001
 
-## API
-Use an Authorization header to work with your own data:
+- Launch dev server:
+  - `npm start`
+  - Default dev server use port 3000
 
-`fetch(url, { headers: { 'Authorization': 'whatever-you-want' }})`
+## Routes
 
-The following endpoints are available:  
+1. /created : PostList Component
+  / is redirected to /created
+    - Navbar has
+      - 'ALL' : All post list
+      - Category Link 'react', 'redux', 'nanodegree', 'udacity'
+    - Submit a Story
+      - Link to '/write' view creating new Post
+    - Ordering Buttons
+      - Date : ascending descending
+      - voteScore : ascending descending
 
-`GET /categories`  
-  **USAGE:**   
-    Get all of the categories available for the app. List is found in categories.js.
-    Feel free to extend this list as you desire.    
+2. /created/:category : PostList Component
+    - same to default view, filtered with the selected category
 
-`GET /:category/posts`  
-  **USAGE:**    
-    Get all of the posts for a particular category   
+3. /detail/:postid : Detail component
+  Details
+    - Details of a post, Title, Body, Author, time, vote score
+    - control to edit or delete the post
+    - edit is opened using React-bootstrap Modal
 
-`GET /posts`  
-  **USAGE:**    
-    Get all of the posts. Useful for the main page when no category is selected.  
+    - Comments (separated as Comment component)
+      - list all the comments for that post, ordered by voteScore (highest first)
+      - Ordering Buttons fo Comments (Date, voteScore)
+      - control to add a new comment (Modal)
+      - control to edit comment (Modal), and delete
 
-`POST /posts`  
-  **USAGE:**  
-    Add a new post  
-  
-  **PARAMS:**   
-    id - UUID should be fine, but any unique id will work  
-    timestamp - timestamp in whatever format you like, you can use Date.now() if you like  
-    title - String  
-    body - String  
-    owner - String  
-    category: Any of the categories listed in categories.js. Feel free to extend this list as you desire.  
+4. /write : Form Compoenent
+    - View for creating new Post
+      - Form to create new post
+      - Editing for existing data is opened in Post Detail View as Modal
 
-`GET /posts/:id`  
-  **USAGE:**  
-    Get the details of a single post  
+## About the Author
 
-`POST /posts/:id`  
-  **USAGE:**  
-    Used for voting on a post  
-
-  **PARAMS:**  
-    option - String: Either "upVote" or "downVote"  
-    
-`PUT /posts/:id`  
-  **USAGE:**  
-    Edit the details of an existing post  
-
-  **PARAMS:**  
-    title - String  
-    body - String  
-
-`DELETE /posts/:id`  
-  **USAGE:**  
-    Sets the deleted flag for a post to 'true'.   
-    Sets the parentDeleted flag for all child comments to 'true'.  
-  
-`GET /posts/:id/comments`  
-  **USAGE:**  
-    Get all the comments for a single post  
-
-`POST /comments`  
-  **USAGE:**  
-    Add a comment to a post  
-
-  **PARAMS:**  
-    id: Any unique ID. As with posts, UUID is probably the best here.  
-    timestamp: timestamp. Get this however you want.  
-    body: String  
-    owner: String  
-    parentId: Should match a post id in the database.  
-
-`GET /comments/:id`  
-  **USAGE:**  
-    Get the details for a single comment  
-
-`POST /comments/:id`  
-  **USAGE:**  
-    Used for voting on a comment.  
-
-`PUT /comments/:id`  
-  **USAGE:**  
-    Edit the details of an existing comment  
-  
-  **PARAMS:**  
-    timestamp: timestamp. Get this however you want.  
-    body: String  
-
-`DELETE /comments/:id`  
-  **USAGE:**  
-    Sets a comment's deleted flag to 'true'  
+  - Author : Kang Doojin (doojin.kang@gmail.com)
+         Udacity nanodegree react program student

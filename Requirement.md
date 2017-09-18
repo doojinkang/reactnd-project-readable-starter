@@ -1,6 +1,57 @@
-# Story list
+# Q list
 
-각 뷰마다 질문 리스트를 만들어 보자.
+1. Action and reducer
+  Every actions passed to all the reducers in combine.
+  Is there a way avoid this behaviour?
+
+2. Display props that is not set yet
+  Detail gets props of post info by App <Route path>
+  This props may not be set when Detail page opened
+  because Posts are from the server asynchronously.
+  {post.title} causes error, so I coded { post && post.title }
+  Is there a way avoid expression { post && post.title } ?
+
+3. Store Design
+  The component which access store as props or dispatcher
+  Each component can access store by itself.
+
+  - App     : post    : addPost
+  - Detail  :         : votePost, deletePost
+  - Form    :         : addPost
+  - Comment : comment : addComment, voteComment, deletePost
+
+  Another design will be App has all,
+  and pass necessary things to sub components.
+  If the sub component has no other state, it can be const.
+
+  Which is better design?
+
+4. () => this.openModal() vs this.openModal
+
+  openModal = (comment) => {
+    // comment is undefined if create new comment
+    // comment is valid object if edit exist comment
+  }
+
+  [1] <button onClick={this.openModal}>Create Comment</button>
+  This doesn't work because comment is Proxy object (event)
+
+  [2] <button onClick={() => this.openModal()}>Create Comment</button>
+  This works : comment is undefined in openModal.
+
+  I don't clearly undestand the difference.
+
+
+Solved
+
+1. Delete set flag deleted
+   As for the actual delet from state object
+   Object spread
+      ==> Object spread 같은 것으로 해결하고 싶음...  (질문)
+  https://stackoverflow.com/questions/36553129/what-is-the-shortest-way-to-modify-immutable-objects-using-spread-and-destructur
+
+
+# Story list
 
 1. Default Root List View
 
@@ -81,14 +132,43 @@
       ==> Object spread 같은 것으로 해결하고 싶음...  (질문)
 
   - sort
-      created, trending (both post and comment)
+      Post - created : newer first
+           - hot : # of comments
+           - trending : higher votescore first
+      Comment - created : newer first
+              - trending : higher votescore first
+
+  - Form 은 Detail 에서 new/edit 할 수 있도록 하자
+    route 에서는 처리할 수 있도록
+    스팀잇은 new 는 전체 페이지, edit 은 detail (url 은 detail 과 동일)
 
   - category 추가 시 적용 확인 ok
     /write 에서 category 가 default 로 선택되지 않음
       ==> history 를 통해서 가능할 것 같은데...
 
 
+Store, dispatch 를 props 로 사용하는 컴포넌트
 
+  App     : post    : addPost
+  Detail  :         : votePost, deletePost
+  Form    :         : addPost
+  Comment : comment : addComment, voteComment, deletePost
+
+  editPost 는  addPost 를 그대로 사용할 수 있다.
+  state object spreading 를 사용하므로 add 와 edit 차이 없음
+
+  App 에서 모두 설정한 후 props 로 전달 하는 것이 맞는가? (질문)
+  이렇게 하면 routes 의 component 는 모두 const 로 할 수 있을 것 같음
+
+Refactoring Point
+
+  - Proper owner of store, dispatch
+  - const component
+  - action 에서 postAdd, commentAdd 의 파라미터를 post, comment 로
+  - Form, Comment 에서 form data 를 받기 위한 state 관련 코드
+
+App    --> Form (new)  : category
+Detail --> Form (edit) : category, post, closeForm
 
 # Data
 
@@ -153,4 +233,3 @@
 
 - Post/Comment display current score and control to increase or decrease the voteScore
 - Post display the number of comments for tha post.
-
