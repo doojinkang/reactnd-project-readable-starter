@@ -39,7 +39,7 @@ class Form extends Component {
         }
       }))
     }
-    console.log('componentDidMount', this.state)
+    // console.log('componentDidMount', this.state)
   }
 
   handleSubmit = (e) => {
@@ -66,12 +66,12 @@ class Form extends Component {
       return
       // value.category = this.props.categories[0].name
     }
-    console.log(value)
+    // console.log(value)
 
     if ( this.state.isEditMode ) {
       PostAPI.editPost(value.id, value.timestamp, value.title,
                        value.body, value.author, value.category).then( (data) => {
-        console.log('API.editPost', data)
+        // console.log('API.editPost', data)
         this.props.addPost(data)
         this.props.closeForm()
       })
@@ -79,7 +79,7 @@ class Form extends Component {
     else {
       PostAPI.newPost(value.id, value.timestamp, value.title,
                       value.body, value.author, value.category).then( (data) => {
-        console.log('API.newPost', data)
+        // console.log('API.newPost', data)
         this.props.addPost(data)
         this.props.history.push('/')
       })
@@ -89,7 +89,7 @@ class Form extends Component {
   handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log('handleChange', name, value)
+    // console.log('handleChange', name, value)
     this.setState(() => ({
       ...this.state,
       'post' : {

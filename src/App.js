@@ -23,11 +23,11 @@ class App extends Component {
 
   componentDidMount = () => {
     PostAPI.getCategories().then( (data) => {
-      console.log('API.getCategories', data)
+      // console.log('API.getCategories', data)
       this.setState( {categories: data} )
     })
     PostAPI.getPosts().then( (data) => {
-      console.log('API.getPosts', data)
+      // console.log('API.getPosts', data)
       data.map((post)=>{
         this.props.addPost(post)
       })
@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   render = () => {
-    console.log('App.render', this.props)
+    // console.log('App.render', this.props)
     return (
       <Router>
         <div>

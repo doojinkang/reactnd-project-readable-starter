@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { POST_ADD, POST_VOTE, POST_DELETE, COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions'
 
 function post( state = {}, action) {
-  console.log('reducer.post', action)
+  // console.log('reducer.post', action)
   switch (action.type) {
   case POST_ADD:
     return {
@@ -23,7 +23,7 @@ function post( state = {}, action) {
 }
 
 function comment( state = {}, action) {
-  console.log('reducer.comment', action)
+  // console.log('reducer.comment', action)
   switch (action.type) {
   case COMMENT_ADD:
     return {

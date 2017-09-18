@@ -24,7 +24,7 @@ class PostList extends Component {
   }
 
   handleOrder(sortBy) {
-    console.log('handleOrder', sortBy, this.state.order)
+    // console.log('handleOrder', sortBy, this.state.order)
     if ( this.state.sortBy === sortBy ) {
       this.setState(() => ({
         order: this.state.order === 'ascending' ? 'decending' : 'ascending',

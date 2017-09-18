@@ -23,7 +23,7 @@ class Comment extends Component {
 
   componentDidMount() {
     PostAPI.getComments(this.props.parentId).then( (data) => {
-      console.log('API.getComments', data)
+      // console.log('API.getComments', data)
       data.map((comment)=>{
         this.props.addComment(comment)
       })
@@ -76,12 +76,12 @@ class Comment extends Component {
       this.toast.show('Message', 'Enter Author')
       return
     }
-    console.log(value)
+    // console.log(value)
 
     if ( typeof comment !== 'undefined') {
       PostAPI.editComment(value.id, value.timestamp,
         value.body, value.author, value.parentId).then( (data) => {
-        console.log('API.editComment', data)
+        // console.log('API.editComment', data)
         this.props.addComment(data)
         this.closeModal()
       })
@@ -89,7 +89,7 @@ class Comment extends Component {
     else {
       PostAPI.newComment(value.id, value.timestamp,
         value.body, value.author, value.parentId).then( (data) => {
-        console.log('API.newComment', data)
+        // console.log('API.newComment', data)
         this.props.addComment(data)
         this.closeModal()
       })
@@ -115,7 +115,7 @@ class Comment extends Component {
   handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    console.log('handleChange', name, value)
+    // console.log('handleChange', name, value)
     this.setState(() => ({
       ...this.state,
       'comment' : {
@@ -126,7 +126,7 @@ class Comment extends Component {
   }
 
   handleOrder(sortBy) {
-    console.log('handleOrder', sortBy, this.state.order)
+    // console.log('handleOrder', sortBy, this.state.order)
     if ( this.state.sortBy === sortBy ) {
       this.setState(() => ({
         order: this.state.order === 'ascending' ? 'decending' : 'ascending',

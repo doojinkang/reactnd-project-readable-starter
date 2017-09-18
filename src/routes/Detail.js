@@ -46,7 +46,7 @@ class Detail extends Component {
 
   render() {
     const post = this.props.post
-    console.log('...', post)
+    // console.log('...', post)
     return (
       <div className='container'>
 
