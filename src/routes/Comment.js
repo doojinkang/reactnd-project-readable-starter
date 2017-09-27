@@ -10,7 +10,7 @@ import { _dt } from '../lib/dateUtil'
 import { sortGenerator } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
-import { commentAdd, commentVote, commentDelete } from '../actions'
+import { commentAdd, commentVote, commentDelete } from '../actions/commentActions'
 
 class Comment extends Component {
   state = {

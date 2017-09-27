@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { POST_ADD, POST_VOTE, POST_DELETE, COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions'
+import { POST_ADD, POST_VOTE, POST_DELETE, COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions/types'
 
 function post( state = {}, action) {
   // console.log('reducer.post', action)

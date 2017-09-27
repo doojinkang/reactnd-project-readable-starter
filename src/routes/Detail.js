@@ -8,7 +8,7 @@ import { _dt } from '../lib/dateUtil'
 import Form from './Form'
 import Comment from './Comment'
 
-import { postVote, postDelete } from '../actions'
+import { postVote, postDelete } from '../actions/postActions'
 
 class Detail extends Component {
 

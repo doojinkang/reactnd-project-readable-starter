@@ -11,7 +11,7 @@ import Form from './routes/Form'
 import Detail from './routes/Detail'
 import Header from './components/Header'
 
-import { postAdd } from './actions'
+import { postAdd } from './actions/postActions'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'

@@ -7,7 +7,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 
 import Toast from '../components/Toast'
-import { postAdd } from '../actions'
+import { postAdd } from '../actions/postActions'
 
 class Form extends Component {
   state = {
