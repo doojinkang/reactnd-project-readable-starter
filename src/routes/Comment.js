@@ -7,10 +7,12 @@ import base64 from 'uuid-base64'
 
 import * as PostAPI from '../PostAPI'
 import { _dt } from '../lib/dateUtil'
-import { sortGenerator } from '../lib/sortUtil'
+import { sortGenerator, glyphy } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
 import { commentAdd, commentVote, commentDelete } from '../actions/commentActions'
+
+import './style.css'
 
 class Comment extends Component {
   state = {
@@ -152,16 +154,16 @@ class Comment extends Component {
               <th>Comment</th>
               <th>Author</th>
               <th>
-                <button className='btn, btn-default'
+                <button className='btn-link'
                         onClick={() => this.handleOrder('timestamp')}
                 > Date </button>
-                { this.state.sortBy === 'timestamp' ? this.state.order : '' }
+                { this.state.sortBy === 'timestamp' ? glyphy(this.state.order) : '' }
               </th>
               <th>
-                <button className='btn, btn-default'
+                <button className='btn-link'
                         onClick={() => this.handleOrder('voteScore')}
                 > voteScore </button>
-                { this.state.sortBy === 'voteScore' ? this.state.order : '' }
+                { this.state.sortBy === 'voteScore' ? glyphy(this.state.order) : '' }
               </th>
             </tr>
           </thead>
@@ -207,14 +209,14 @@ class Comment extends Component {
       <Modal.Body>
         <form action='' onSubmit={this.handleSubmit}>
           <div className='form-inline'>
-            <span className = 'label label-default' style={{marginRight:'10px'}}> Author </span>
-            <input type='text' className='form-control' style={{marginRight:'20px'}} name='author'
-                    value={this.state.comment.author}
+            <span className = 'label label-default title'> Comment </span>
+            <input type='text' className='form-control title' name='body'
+                    value={this.state.comment.body}
                     onChange={this.handleChange}
             />
-            <span className = 'label label-default' style={{marginRight:'10px'}}> Comment </span>
-            <input type='text' className='form-control' style={{marginRight:'20px'}} name='body'
-                    value={this.state.comment.body}
+            <span className = 'label label-default title'> Author </span>
+            <input type='text' className='form-control title' name='author'
+                    value={this.state.comment.author}
                     onChange={this.handleChange}
             />
             <button className='btn btn-default'>Submit</button>

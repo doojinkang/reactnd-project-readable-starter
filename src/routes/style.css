@@ -1,0 +1,8 @@
+.title {
+  margin-right: 20px;
+}
+
+.body-content {
+  display: inline-block;
+  white-space: pre-wrap;
+}

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import {Grid, Row, Col } from 'react-bootstrap'
 
 import { _dt } from '../lib/dateUtil'
-import { sortGenerator } from '../lib/sortUtil'
+import { sortGenerator, glyphy } from '../lib/sortUtil'
 
 class PostList extends Component {
   state = {
@@ -52,11 +52,12 @@ class PostList extends Component {
       <div className='container'>
         <Grid>
           <Row className="show-grid">
-            <Col xs={6} xsOffset={6}>
-              <strong style={{marginRight: '10px'}}>Category : {catPath ? this.nameByPath(catPath) : 'All'}</strong>
-              Sort : {this.state.sortBy} ( {this.state.order} )
+            <Col xs={8}>
             </Col>
-            <Col xs={6} xsOffset={10}>
+            <Col xs={2}>
+              <strong>Category : {catPath ? this.nameByPath(catPath) : 'All'}</strong>
+            </Col>
+            <Col xs={2}>
               <Link to='/write'>Submit a Story</Link>
             </Col>
           </Row>
@@ -69,16 +70,16 @@ class PostList extends Component {
               <th>Title</th>
               <th>Author</th>
               <th>
-                <button className='btn, btn-default'
+                <button className='btn-link'
                         onClick={() => this.handleOrder('timestamp')}
                 > Date </button>
-                { this.state.sortBy === 'timestamp' ? this.state.order : '' }
+                { this.state.sortBy === 'timestamp' ? glyphy(this.state.order) : '' }
               </th>
               <th>
-                <button className='btn, btn-default'
+                <button className='btn-link'
                         onClick={() => this.handleOrder('voteScore')}
                 > voteScore </button>
-                { this.state.sortBy === 'voteScore' ? this.state.order : '' }
+                { this.state.sortBy === 'voteScore' ? glyphy(this.state.order) : '' }
               </th>
             </tr>
           </thead>

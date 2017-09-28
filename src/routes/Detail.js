@@ -10,6 +10,8 @@ import Comment from './Comment'
 
 import { postVote, postDelete } from '../actions/postActions'
 
+import './style.css'
+
 class Detail extends Component {
 
   state = {
@@ -51,39 +53,33 @@ class Detail extends Component {
       <div className='container'>
 
         <div className='form-group'>
-          <span className = 'label label-default'> Title </span>
-          <div>
-            {post && post.title}
-            <span style={{marginLeft: '20px'}}>
-              { post && _dt(post.timestamp) }
-            </span>
+          <span className = 'label label-default title'> Title </span>
+          {post && post.title}
+        </div>
+        <div className='form-group'>
+          <span className = 'label label-default title'> Date </span>
+          { post && _dt(post.timestamp) }
+        </div>
+        <div className='form-group'>
+          <span className = 'label label-default title'> Body </span>
+          <div className = 'body-content'>
+            { post && post.body }
           </div>
         </div>
         <div className='form-group'>
-          <span className = 'label label-default'> Body </span>
-          <div>
-            { post && post.body}
-          </div>
+          <span className = 'label label-default title'> Author </span>
+          { post && post.author}
         </div>
         <div className='form-group'>
-          <span className = 'label label-default'> Author </span>
-          <div>
-            { post && post.author}
-          </div>
+          <span className = 'label label-default title'> VoteScore </span>
+          {post && post.voteScore}
         </div>
         <div className='form-group'>
-          <span className = 'label label-default'> VoteScore </span>
-          <div>
-            {post && post.voteScore}
-          </div>
+          <span className = 'label label-default title'> Category </span>
+          { post && post.category}
         </div>
-        <div className='form-group'>
-          <span className = 'label label-default'> Category </span>
-          <div>
-            { post && post.category}
-          </div>
-        </div>
-        <div style={{marginTop:'10px'}}>
+        <hr/>
+        <div>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "upVote")}>voteUp</button>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "downVote")}>voteDown</button>
           <button className='btn btn-default' onClick={() => this.openEditModal()}>Edit</button>

@@ -9,6 +9,8 @@ import * as PostAPI from '../PostAPI'
 import Toast from '../components/Toast'
 import { postAdd } from '../actions/postActions'
 
+import './style.css'
+
 class Form extends Component {
   state = {
     isEditMode : false,
@@ -125,27 +127,28 @@ class Form extends Component {
             />
           </div>
           <div className='form-inline'>
-            <span className = 'label label-default' style={{marginRight:'20px'}}> Author </span>
-            <input type='text' className='form-control' name='author'
+            <span className = 'label label-default title'> Author </span>
+            <input type='text' className='form-control title' name='author'
                 value={post && post.author}
                 onChange={this.handleChange}
             />
-            <span className = 'label label-default' style={{margin:'0 20px 0 50px'}}> Category </span>
+            <span className = 'label label-default title'> Category </span>
             <select
                 name='category'
                 value={post.category}
                 onChange={this.handleChange} >
                 <option value='' disabled> Select </option>
             {
-              this.props.categories.map((category) => (
+              this.props.categories && this.props.categories.map((category) => (
                 <option key={category.name} value={category.name}> {category.name} </option>
               ))
             }
             </select>
           </div>
-          <div style={{marginTop:'10px'}}>
-            <button className='btn btn-default'>Submit</button>
-            <span style={{marginLeft: '10px'}}>
+          <hr/>
+          <div>
+            <button className='btn btn-default title'>Submit</button>
+            <span>
               <a href='javascript:history.back()'>Cancel</a>
             </span>
           </div>

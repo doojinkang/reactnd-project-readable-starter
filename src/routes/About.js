@@ -11,7 +11,8 @@ const About = () => {
           <div>
             Based On React/Redux
           </div>
-          <div style={{marginTop:'20px'}}>
+          <hr/>
+          <div>
             Doojin Kang
           </div>
         </div>
