@@ -17,10 +17,10 @@ class PostList extends Component {
     const { categories } = this.props
     if ( categories && categories.length > 0 ) {
       const theCategory = categories.find((category) => (category.path===path))
-      return theCategory.name
+      return theCategory ? theCategory.name : path
     }
     else {
-      return undefined
+      return path
     }
   }
 
