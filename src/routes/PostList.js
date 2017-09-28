@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {Grid, Row, Col } from 'react-bootstrap'
@@ -106,5 +107,11 @@ class PostList extends Component {
   }
 }
 
-export default PostList;
+function mapStateToProps({category} ) {
+  return {
+    categories: category.categories,
+  }
+}
+
+export default connect(mapStateToProps, undefined)(PostList)
 

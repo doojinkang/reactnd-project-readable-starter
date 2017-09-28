@@ -48,7 +48,6 @@ class App extends Component {
                 posts={this.props.posts.filter((post)=>(
                   post.deleted === false
                 ))}
-                categories={this.props.categories}
               />
             )}
           />
