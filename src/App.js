@@ -12,19 +12,17 @@ import Detail from './routes/Detail'
 import Header from './components/Header'
 
 import { postAdd } from './actions/postActions'
+import { categoryAdd } from './actions/categoryActions'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
 
 class App extends Component {
-  state = {
-    categories: []
-  }
 
   componentDidMount = () => {
     PostAPI.getCategories().then( (data) => {
       // console.log('API.getCategories', data)
-      this.setState( {categories: data} )
+      this.props.addCategory(data)
     })
     PostAPI.getPosts().then( (data) => {
       // console.log('API.getPosts', data)
@@ -39,7 +37,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Header categories={this.state.categories}/>
+          <Header categories={this.props.categories}/>
           {/* Route component (Home, About) has props history, location, match */}
           <Route exact path='/' component={Home}/>
           <Route path='/about' component={About}/>
@@ -50,7 +48,7 @@ class App extends Component {
                 posts={this.props.posts.filter((post)=>(
                   post.deleted === false
                 ))}
-                categories={this.state.categories}
+                categories={this.props.categories}
               />
             )}
           />
@@ -58,14 +56,14 @@ class App extends Component {
             render={(props) => (
               <Detail {...props}
                post={this.props.posts.find((post)=>(post.id===props.match.params.id))}
-               categories={this.state.categories}
+               categories={this.props.categories}
               />
             )}
           />
           <Route path='/write'
             render={(props) => (
               <Form {...props}
-                categories={this.state.categories}
+                categories={this.props.categories}
               />
             )}
           />
@@ -75,17 +73,19 @@ class App extends Component {
   }
 }
 
-function mapStateToProps( {post} ) {
+function mapStateToProps( {post, category} ) {
   return {
     posts: Object.keys(post).map((key) => (
           post[key]
-        ))
+        )),
+    categories: category.categories,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     addPost : (data) => dispatch(postAdd({id: data.id, post:data})),
+    addCategory : (data) => dispatch(categoryAdd({catArray: data}))
   }
 }
 

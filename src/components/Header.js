@@ -14,7 +14,7 @@ const Header = (props) => (
       <Navbar.Text>
         <Link to='/'>ALL</Link>
       </Navbar.Text>
-    {props.categories.map((category) => (
+    {props.categories && props.categories.map((category) => (
       <Navbar.Text key={category.name}>
         <Link to={`/created/${category.path}`}>{category.name}</Link>
       </Navbar.Text>
