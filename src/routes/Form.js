@@ -158,10 +158,16 @@ class Form extends Component {
   }
 }
 
+function mapStateToProps({category} ) {
+  return {
+    categories: category.categories,
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     addPost : (data) => dispatch(postAdd({id: data.id, post:data})),
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(Form)
+export default connect(mapStateToProps, mapDispatchToProps)(Form)

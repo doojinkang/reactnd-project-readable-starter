@@ -58,13 +58,7 @@ class App extends Component {
               />
             )}
           />
-          <Route path='/write'
-            render={(props) => (
-              <Form {...props}
-                categories={this.props.categories}
-              />
-            )}
-          />
+          <Route path='/write' component={Form}/>
         </div>
       </Router>
     )
