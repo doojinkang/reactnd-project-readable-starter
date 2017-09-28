@@ -117,6 +117,12 @@ class Detail extends Component {
   }
 }
 
+function mapStateToProps({category} ) {
+  return {
+    categories: category.categories,
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
     votePost : (data) => dispatch((postVote(data))),
@@ -124,5 +130,5 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(undefined, mapDispatchToProps)(Detail)
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)
 
