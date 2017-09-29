@@ -1,4 +1,5 @@
 export const POST_ADD = 'POST_ADD'
+export const POST_EDIT = 'POST_EDIT'
 export const POST_VOTE = 'POST_VOTE'
 export const POST_DELETE = 'POST_DELETE'
 export const POST_CONFIG = 'POST_CONFIG'

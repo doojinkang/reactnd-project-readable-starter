@@ -7,7 +7,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 
 import Toast from '../components/Toast'
-import { postAdd } from '../actions/postActions'
+import { postAdd, postEdit } from '../actions/postActions'
 
 import './style.css'
 
@@ -74,7 +74,7 @@ class Form extends Component {
       PostAPI.editPost(value.id, value.timestamp, value.title,
                        value.body, value.author, value.category).then( (data) => {
         // console.log('API.editPost', data)
-        this.props.addPost(data)
+        this.props.editPost(data)
         this.props.closeForm()
       })
     }
@@ -170,6 +170,7 @@ function mapStateToProps({category} ) {
 function mapDispatchToProps(dispatch) {
   return {
     addPost : (data) => dispatch(postAdd(data)),
+    editPost : (data) => dispatch(postEdit(data)),
   }
 }
 

@@ -1,4 +1,10 @@
-import { POST_ADD, POST_VOTE, POST_DELETE, POST_CONFIG} from '../actions/types'
+import {
+    POST_ADD,
+    POST_EDIT,
+    POST_VOTE,
+    POST_DELETE,
+    POST_CONFIG
+} from '../actions/types'
 
 const initialPost = {
   config: {
@@ -12,6 +18,7 @@ export default function post( state = initialPost, action) {
   // console.log('reducer.post', action)
   switch (action.type) {
   case POST_ADD:
+  case POST_EDIT:
     return {
       ...state,
       contents: {
