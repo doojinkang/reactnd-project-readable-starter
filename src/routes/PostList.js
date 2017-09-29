@@ -7,12 +7,9 @@ import {Grid, Row, Col } from 'react-bootstrap'
 import { _dt } from '../lib/dateUtil'
 import { sortGenerator, glyphy } from '../lib/sortUtil'
 
-class PostList extends Component {
-  state = {
-    sortBy: 'timestamp',  // or 'voteScore'
-    order: 'descending',  // or 'ascending'
-  }
+import { postConfig } from '../actions/postActions'
 
+class PostList extends Component {
   nameByPath(path) {
     const { categories } = this.props
     const theCategory = categories.find((category) => (category.path===path))
@@ -21,17 +18,18 @@ class PostList extends Component {
   }
 
   handleOrder(sortBy) {
-    // console.log('handleOrder', sortBy, this.state.order)
-    if ( this.state.sortBy === sortBy ) {
-      this.setState(() => ({
-        order: this.state.order === 'ascending' ? 'decending' : 'ascending',
-      }))
+    console.log('handleOrder', sortBy, this.props.order)
+    if ( this.props.sortBy === sortBy ) {
+      this.props.configPost({
+          sortBy,
+          order: this.props.order === 'ascending' ? 'decending' : 'ascending'
+      })
     }
     else {
-      this.setState(() => ({
-        sortBy: this.state.sortBy === 'timestamp' ? 'voteScore' : 'timestamp',
-        order: 'descending'
-      }))
+      this.props.configPost({
+          sortBy: this.props.sortBy === 'timestamp' ? 'voteScore' : 'timestamp',
+          order: 'descending'
+      })
     }
   }
 
@@ -42,7 +40,7 @@ class PostList extends Component {
     const filteredPost = catPath ?
           posts.filter((post)=>(post.category===this.nameByPath(catPath))) :
           posts
-    filteredPost.sort(sortGenerator(this.state.sortBy, this.state.order))
+    filteredPost.sort(sortGenerator(this.props.sortBy, this.props.order))
 
     return (
       <div className='container'>
@@ -69,13 +67,13 @@ class PostList extends Component {
                 <button className='btn-link'
                         onClick={() => this.handleOrder('timestamp')}
                 > Date </button>
-                { this.state.sortBy === 'timestamp' ? glyphy(this.state.order) : '' }
+                { this.props.sortBy === 'timestamp' ? glyphy(this.props.order) : '' }
               </th>
               <th>
                 <button className='btn-link'
                         onClick={() => this.handleOrder('voteScore')}
                 > voteScore </button>
-                { this.state.sortBy === 'voteScore' ? glyphy(this.state.order) : '' }
+                { this.props.sortBy === 'voteScore' ? glyphy(this.props.order) : '' }
               </th>
             </tr>
           </thead>
@@ -104,11 +102,19 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps({category} ) {
+function mapStateToProps({post, category} ) {
   return {
+    sortBy: post.config.sortBy,
+    order: post.config.order,
     categories: category.contents,
   }
 }
 
-export default connect(mapStateToProps, undefined)(PostList)
+function mapDispatchToProps(dispatch) {
+  return {
+    configPost : (data) => dispatch((postConfig(data))),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList)
 

@@ -1,4 +1,4 @@
-import { POST_ADD, POST_VOTE, POST_DELETE
+import { POST_ADD, POST_VOTE, POST_DELETE, POST_CONFIG
        } from './types.js'
 
 export function postAdd ({ id, post }) {
@@ -21,5 +21,13 @@ export function postDelete ({id}) {
   return {
     type: POST_DELETE,
     id,
+  }
+}
+
+export function postConfig ({sortBy, order}) {
+  return {
+    type: POST_CONFIG,
+    sortBy,
+    order,
   }
 }
