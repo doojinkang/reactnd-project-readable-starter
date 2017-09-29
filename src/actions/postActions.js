@@ -1,10 +1,9 @@
 import { POST_ADD, POST_VOTE, POST_DELETE, POST_CONFIG
        } from './types.js'
 
-export function postAdd ({ id, post }) {
+export function postAdd (post) {
   return {
     type: POST_ADD,
-    id,
     post
   }
 }

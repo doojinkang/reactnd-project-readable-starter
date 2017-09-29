@@ -169,7 +169,7 @@ function mapStateToProps({category} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost : (data) => dispatch(postAdd({id: data.id, post:data})),
+    addPost : (data) => dispatch(postAdd(data)),
   }
 }
 

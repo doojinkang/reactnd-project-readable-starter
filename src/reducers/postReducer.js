@@ -16,7 +16,7 @@ export default function post( state = initialPost, action) {
       ...state,
       contents: {
         ...state.contents,
-        [action.id]: action.post
+        [action.post.id]: action.post
       }
     }
   case POST_VOTE:
