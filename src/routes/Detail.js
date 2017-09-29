@@ -78,6 +78,13 @@ class Detail extends Component {
           <span className = 'label label-default title'> Category </span>
           { post && post.category}
         </div>
+        <div className='form-group'>
+          <span className = 'label label-default title'> # of Comments </span>
+          { this.props.comments.filter((comment)=>(
+                  comment.parentId===this.props.match.params.id &&
+                  comment.deleted === false)).length
+          }
+        </div>
         <hr/>
         <div>
           <button className='btn btn-default' onClick={() => this.processVote(post.id, "upVote")}>voteUp</button>
@@ -89,6 +96,7 @@ class Detail extends Component {
         <hr/>
 
         <Comment
+          comments={this.props.comments}
           parentId={this.props.match.params.id}
         />
 
@@ -113,9 +121,12 @@ class Detail extends Component {
   }
 }
 
-function mapStateToProps({category} ) {
+function mapStateToProps({category, comment} ) {
   return {
     categories: category.contents,
+    comments: Object.keys(comment.contents).map((key) => (
+          comment.contents[key]
+        ))
   }
 }
 

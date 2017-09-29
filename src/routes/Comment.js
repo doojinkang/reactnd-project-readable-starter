@@ -238,9 +238,6 @@ function mapStateToProps( {comment} ) {
   return {
     sortBy: comment.config.sortBy,
     order: comment.config.order,
-    comments: Object.keys(comment.contents).map((key) => (
-          comment.contents[key]
-        ))
   }
 }
 
