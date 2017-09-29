@@ -1,6 +1,10 @@
-import { COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE } from '../actions/types'
+import { COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE, COMMENT_CONFIG } from '../actions/types'
 
 const initialComment = {
+  config: {
+    sortBy: 'timestamp',  // or 'voteScore'
+    order: 'descending',  // or 'ascending'
+  },
   contents : {}
 }
 
@@ -29,7 +33,14 @@ export default function comment( state = initialComment, action) {
       ...state,
       contents: newState
     };
-
+  case COMMENT_CONFIG:
+    return {
+      ...state,
+      config: {
+        sortBy: action.sortBy,
+        order: action.order
+      }
+    }
   default:
     return state
   }

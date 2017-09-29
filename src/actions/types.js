@@ -6,4 +6,6 @@ export const POST_CONFIG = 'POST_CONFIG'
 export const COMMENT_ADD = 'COMMENT_ADD'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_DELETE = 'COMMENT_DELETE'
+export const COMMENT_CONFIG = 'COMMENT_CONFIG'
+
 export const CATEGORY_ADD = 'CATEGORY_ADD'

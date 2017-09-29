@@ -10,7 +10,7 @@ import { _dt } from '../lib/dateUtil'
 import { sortGenerator, glyphy } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
-import { commentAdd, commentVote, commentDelete } from '../actions/commentActions'
+import { commentAdd, commentVote, commentDelete, commentConfig } from '../actions/commentActions'
 
 import './style.css'
 
@@ -18,8 +18,6 @@ class Comment extends Component {
   state = {
     modalOpen : false,
     modalTitle : '',
-    sortBy: 'timestamp',  // or 'voteScore'
-    order: 'descending',  // or 'ascending'
     comment: {}
   }
 
@@ -128,23 +126,24 @@ class Comment extends Component {
   }
 
   handleOrder(sortBy) {
-    // console.log('handleOrder', sortBy, this.state.order)
-    if ( this.state.sortBy === sortBy ) {
-      this.setState(() => ({
-        order: this.state.order === 'ascending' ? 'decending' : 'ascending',
-      }))
+    console.log('handleOrder comment', sortBy, this.props.order)
+    if ( this.props.sortBy === sortBy ) {
+      this.props.configComment({
+          sortBy,
+          order: this.props.order === 'ascending' ? 'decending' : 'ascending'
+      })
     }
     else {
-      this.setState(() => ({
-        sortBy: this.state.sortBy === 'timestamp' ? 'voteScore' : 'timestamp',
-        order: 'descending'
-      }))
+      this.props.configComment({
+          sortBy: this.props.sortBy === 'timestamp' ? 'voteScore' : 'timestamp',
+          order: 'descending'
+      })
     }
   }
 
   render() {
     const {comments} = this.props
-    comments.sort(sortGenerator(this.state.sortBy, this.state.order))
+    comments.sort(sortGenerator(this.props.sortBy, this.props.order))
 
     return (
       <div>
@@ -157,13 +156,13 @@ class Comment extends Component {
                 <button className='btn-link'
                         onClick={() => this.handleOrder('timestamp')}
                 > Date </button>
-                { this.state.sortBy === 'timestamp' ? glyphy(this.state.order) : '' }
+                { this.props.sortBy === 'timestamp' ? glyphy(this.props.order) : '' }
               </th>
               <th>
                 <button className='btn-link'
                         onClick={() => this.handleOrder('voteScore')}
                 > voteScore </button>
-                { this.state.sortBy === 'voteScore' ? glyphy(this.state.order) : '' }
+                { this.props.sortBy === 'voteScore' ? glyphy(this.props.order) : '' }
               </th>
             </tr>
           </thead>
@@ -237,6 +236,8 @@ class Comment extends Component {
 
 function mapStateToProps( {comment} ) {
   return {
+    sortBy: comment.config.sortBy,
+    order: comment.config.order,
     comments: Object.keys(comment.contents).map((key) => (
           comment.contents[key]
         ))
@@ -247,7 +248,8 @@ function mapDispatchToProps(dispatch) {
   return {
     addComment : (data) => dispatch(commentAdd({id: data.id, comment:data})),
     voteComment : (data) => dispatch(commentVote(data)),
-    deleteComment : (data) => dispatch(commentDelete(data))
+    deleteComment : (data) => dispatch(commentDelete(data)),
+    configComment : (data) => dispatch((commentConfig(data))),
   }
 }
 
