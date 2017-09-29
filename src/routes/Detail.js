@@ -20,16 +20,15 @@ class Detail extends Component {
 
   processVote = (id, option) => {
     PostAPI.votePost(id, option).then( (data) => {
-      console.log('API.votePost', data)
-      const newVoteScore = data.voteScore
-      this.props.votePost({id, newVoteScore})
+      // console.log('API.votePost', data)
+      this.props.votePost(data)
     })
   }
 
   processDelete = (id) => {
     PostAPI.deletePost(id).then( (data) => {
-      console.log('API.deletePost', data)
-      this.props.deletePost({id})
+      // console.log('API.deletePost', data)
+      this.props.deletePost(data)
       this.props.history.goBack()
     })
   }

@@ -20,18 +20,17 @@ export function postEdit (post) {
   }
 }
 
-export function postVote ({ id, newVoteScore }) {
+export function postVote (post) {
   return {
     type: POST_VOTE,
-    id,
-    newVoteScore
+    post
   }
 }
 
-export function postDelete ({id}) {
+export function postDelete (post) {
   return {
     type: POST_DELETE,
-    id,
+    post
   }
 }
 

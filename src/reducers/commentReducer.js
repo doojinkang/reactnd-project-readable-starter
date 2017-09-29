@@ -19,6 +19,8 @@ export default function comment( state = initialComment, action) {
   switch (action.type) {
   case COMMENT_ADD:
   case COMMENT_EDIT:
+  case COMMENT_VOTE:
+  case COMMENT_DELETE:
     return {
       ...state,
       contents: {
@@ -26,20 +28,6 @@ export default function comment( state = initialComment, action) {
         [action.comment.id]: action.comment
       }
     }
-  case COMMENT_VOTE:
-    return {
-      ...state,
-      contents: {
-        ...state.contents,
-        [action.id]: {...state.contents[action.id], voteScore: action.newVoteScore }
-      }
-    }
-  case COMMENT_DELETE:
-    let  {[action.id]: deleted, ...newState} = state.contents;
-    return {
-      ...state,
-      contents: newState
-    };
   case COMMENT_CONFIG:
     return {
       ...state,

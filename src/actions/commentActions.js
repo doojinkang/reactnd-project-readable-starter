@@ -20,18 +20,17 @@ export function commentEdit(comment) {
   }
 }
 
-export function commentVote ({ id, newVoteScore }) {
+export function commentVote (comment) {
   return {
     type: COMMENT_VOTE,
-    id,
-    newVoteScore
+    comment
   }
 }
 
-export function commentDelete ({id}) {
+export function commentDelete (comment) {
   return {
     type: COMMENT_DELETE,
-    id,
+    comment
   }
 }
 

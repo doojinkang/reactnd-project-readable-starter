@@ -19,6 +19,8 @@ export default function post( state = initialPost, action) {
   switch (action.type) {
   case POST_ADD:
   case POST_EDIT:
+  case POST_VOTE:
+  case POST_DELETE:
     return {
       ...state,
       contents: {
@@ -26,20 +28,6 @@ export default function post( state = initialPost, action) {
         [action.post.id]: action.post
       }
     }
-  case POST_VOTE:
-    return {
-      ...state,
-      contents: {
-        ...state.contents,
-        [action.id]: {...state.contents[action.id], voteScore: action.newVoteScore }
-      }
-    }
-  case POST_DELETE:
-    let  {[action.id]: deleted, ...newState} = state.contents;
-    return {
-      ...state,
-      contents: newState
-    };
   case POST_CONFIG:
     return {
       ...state,

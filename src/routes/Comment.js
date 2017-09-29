@@ -102,15 +102,14 @@ class Comment extends Component {
   processVote = (id, option) => {
     PostAPI.voteComment(id, option).then( (data) => {
       // console.log('API.voteComment', data)
-      const newVoteScore = data.voteScore
-      this.props.voteComment({id, newVoteScore})
+      this.props.voteComment(data)
     })
   }
 
   processDelete = (id) => {
     PostAPI.deleteComment(id).then( (data) => {
       // console.log('API.deleteComment', data)
-      this.props.deleteComment({id})
+      this.props.deleteComment(data)
     })
   }
 
