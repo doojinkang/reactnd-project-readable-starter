@@ -5,6 +5,7 @@ export const POST_DELETE = 'POST_DELETE'
 export const POST_CONFIG = 'POST_CONFIG'
 
 export const COMMENT_ADD = 'COMMENT_ADD'
+export const COMMENT_EDIT = 'COMMENT_EDIT'
 export const COMMENT_VOTE = 'COMMENT_VOTE'
 export const COMMENT_DELETE = 'COMMENT_DELETE'
 export const COMMENT_CONFIG = 'COMMENT_CONFIG'

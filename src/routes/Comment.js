@@ -10,7 +10,7 @@ import { _dt } from '../lib/dateUtil'
 import { sortGenerator, glyphy } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
-import { commentAdd, commentVote, commentDelete, commentConfig } from '../actions/commentActions'
+import { commentAdd, commentEdit, commentVote, commentDelete, commentConfig } from '../actions/commentActions'
 
 import './style.css'
 
@@ -18,6 +18,7 @@ class Comment extends Component {
   state = {
     modalOpen : false,
     modalTitle : '',
+    isEdit: false,
     comment: {}
   }
 
@@ -36,6 +37,7 @@ class Comment extends Component {
       this.setState(() => ({
         modalOpen: true,
         modalTitle: 'Edit comment ' + comment.id,
+        isEdit: true,
         comment
       }))
     }
@@ -43,6 +45,7 @@ class Comment extends Component {
       this.setState(() => ({
         modalOpen: true,
         modalTitle: 'Create new comment',
+        isEdit: false,
         comment: {
           body: '',
           author: '',
@@ -78,18 +81,18 @@ class Comment extends Component {
     }
     // console.log(value)
 
-    if ( typeof comment !== 'undefined') {
+    if ( this.state.isEdit ) {
       PostAPI.editComment(value.id, value.timestamp,
         value.body, value.author, value.parentId).then( (data) => {
-        // console.log('API.editComment', data)
-        this.props.addComment(data)
+        console.log('API.editComment', data)
+        this.props.editComment(data)
         this.closeModal()
       })
     }
     else {
       PostAPI.newComment(value.id, value.timestamp,
         value.body, value.author, value.parentId).then( (data) => {
-        // console.log('API.newComment', data)
+        console.log('API.newComment', data)
         this.props.addComment(data)
         this.closeModal()
       })
@@ -98,7 +101,7 @@ class Comment extends Component {
 
   processVote = (id, option) => {
     PostAPI.voteComment(id, option).then( (data) => {
-      console.log('API.voteComment', data)
+      // console.log('API.voteComment', data)
       const newVoteScore = data.voteScore
       this.props.voteComment({id, newVoteScore})
     })
@@ -106,7 +109,7 @@ class Comment extends Component {
 
   processDelete = (id) => {
     PostAPI.deleteComment(id).then( (data) => {
-      console.log('API.deleteComment', data)
+      // console.log('API.deleteComment', data)
       this.props.deleteComment({id})
     })
   }
@@ -243,7 +246,8 @@ function mapStateToProps( {comment} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addComment : (data) => dispatch(commentAdd({id: data.id, comment:data})),
+    addComment : (data) => dispatch(commentAdd(data)),
+    editComment : (data) => dispatch(commentEdit(data)),
     voteComment : (data) => dispatch(commentVote(data)),
     deleteComment : (data) => dispatch(commentDelete(data)),
     configComment : (data) => dispatch((commentConfig(data))),

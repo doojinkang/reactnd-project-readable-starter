@@ -1,4 +1,10 @@
-import { COMMENT_ADD, COMMENT_VOTE, COMMENT_DELETE, COMMENT_CONFIG } from '../actions/types'
+import {
+    COMMENT_ADD,
+    COMMENT_EDIT,
+    COMMENT_VOTE,
+    COMMENT_DELETE,
+    COMMENT_CONFIG
+} from '../actions/types'
 
 const initialComment = {
   config: {
@@ -12,11 +18,12 @@ export default function comment( state = initialComment, action) {
   // console.log('reducer.comment', action)
   switch (action.type) {
   case COMMENT_ADD:
+  case COMMENT_EDIT:
     return {
       ...state,
       contents: {
         ...state.contents,
-        [action.id]: action.comment
+        [action.comment.id]: action.comment
       }
     }
   case COMMENT_VOTE:
