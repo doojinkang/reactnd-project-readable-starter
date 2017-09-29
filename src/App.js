@@ -67,8 +67,8 @@ class App extends Component {
 
 function mapStateToProps( {post, category} ) {
   return {
-    posts: Object.keys(post).map((key) => (
-          post[key]
+    posts: Object.keys(post.contents).map((key) => (
+          post.contents[key]
         )),
     categories: category.contents,
   }
