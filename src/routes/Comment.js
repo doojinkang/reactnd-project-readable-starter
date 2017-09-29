@@ -237,8 +237,8 @@ class Comment extends Component {
 
 function mapStateToProps( {comment} ) {
   return {
-    comments: Object.keys(comment).map((key) => (
-          comment[key]
+    comments: Object.keys(comment.contents).map((key) => (
+          comment.contents[key]
         ))
   }
 }
