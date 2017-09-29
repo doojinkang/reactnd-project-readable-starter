@@ -48,6 +48,13 @@ class Detail extends Component {
   render() {
     const post = this.props.post
     // console.log('...', post)
+    if ( !post ) {
+      return (
+        <div className='container'>
+          Request content id {this.props.match.params.id} is not found
+        </div>
+      )
+    }
     return (
       <div className='container'>
 
