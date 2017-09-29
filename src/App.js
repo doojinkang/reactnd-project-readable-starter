@@ -70,7 +70,7 @@ function mapStateToProps( {post, category} ) {
     posts: Object.keys(post).map((key) => (
           post[key]
         )),
-    categories: category.categories,
+    categories: category.contents,
   }
 }
 

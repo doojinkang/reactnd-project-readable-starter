@@ -15,13 +15,9 @@ class PostList extends Component {
 
   nameByPath(path) {
     const { categories } = this.props
-    if ( categories && categories.length > 0 ) {
-      const theCategory = categories.find((category) => (category.path===path))
-      return theCategory ? theCategory.name : path
-    }
-    else {
-      return path
-    }
+    const theCategory = categories.find((category) => (category.path===path))
+    // console.log('nameByPath', path, theCategory)
+    return theCategory ? theCategory.name : path
   }
 
   handleOrder(sortBy) {
@@ -110,7 +106,7 @@ class PostList extends Component {
 
 function mapStateToProps({category} ) {
   return {
-    categories: category.categories,
+    categories: category.contents,
   }
 }
 

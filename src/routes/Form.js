@@ -139,7 +139,7 @@ class Form extends Component {
                 onChange={this.handleChange} >
                 <option value='' disabled> Select </option>
             {
-              this.props.categories && this.props.categories.map((category) => (
+              this.props.categories.map((category) => (
                 <option key={category.name} value={category.name}> {category.name} </option>
               ))
             }
@@ -163,7 +163,7 @@ class Form extends Component {
 
 function mapStateToProps({category} ) {
   return {
-    categories: category.categories,
+    categories: category.contents,
   }
 }
 

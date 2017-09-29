@@ -115,7 +115,7 @@ class Detail extends Component {
 
 function mapStateToProps({category} ) {
   return {
-    categories: category.categories,
+    categories: category.contents,
   }
 }
 

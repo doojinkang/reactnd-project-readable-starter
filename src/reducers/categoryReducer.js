@@ -1,12 +1,16 @@
 import { CATEGORY_ADD } from '../actions/types'
 
-export default function category( state = {}, action) {
-  console.log('reducer.category', action)
+const initialCategory = {
+  contents: []
+}
+
+export default function category( state = initialCategory, action) {
+  // console.log('reducer.category', action)
   switch (action.type) {
   case CATEGORY_ADD:
     return {
       ...state,
-      categories: action.catArray
+      contents: action.catArray
     }
   default:
     return state
