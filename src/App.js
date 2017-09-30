@@ -77,7 +77,7 @@ function mapStateToProps( {post, category} ) {
 function mapDispatchToProps(dispatch) {
   return {
     addPost : (data) => dispatch(postAdd(data)),
-    addCategory : (data) => dispatch(categoryAdd({catArray: data}))
+    addCategory : (data) => dispatch(categoryAdd(data))
   }
 }
 
