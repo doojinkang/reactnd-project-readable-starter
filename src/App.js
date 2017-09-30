@@ -74,12 +74,5 @@ function mapStateToProps( {post, category} ) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addPost : (data) => dispatch(addPost(data)),
-    addCategory : (data) => dispatch(addCategory(data))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, {addPost, addCategory})(App)
 

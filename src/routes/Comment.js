@@ -10,7 +10,7 @@ import { _dt } from '../lib/dateUtil'
 import { sortGenerator, glyphy } from '../lib/sortUtil'
 
 import Toast from '../components/Toast'
-import { addComment, editComment, voteComment, deleteComment, configComment } from '../actions/commentActions'
+import * as commentActions from '../actions/commentActions'
 
 import './style.css'
 
@@ -243,15 +243,5 @@ function mapStateToProps( {comment} ) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addComment : (data) => dispatch(addComment(data)),
-    editComment : (data) => dispatch(editComment(data)),
-    voteComment : (data) => dispatch(voteComment(data)),
-    deleteComment : (data) => dispatch(deleteComment(data)),
-    configComment : (data) => dispatch((configComment(data))),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comment)
+export default connect(mapStateToProps, commentActions)(Comment)
 

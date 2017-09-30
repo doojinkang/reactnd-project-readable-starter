@@ -136,12 +136,5 @@ function mapStateToProps({category, comment} ) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    votePost : (data) => dispatch((votePost(data))),
-    deletePost : (data) => dispatch((deletePost(data))),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Detail)
+export default connect(mapStateToProps, {votePost, deletePost})(Detail)
 

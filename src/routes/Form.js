@@ -167,11 +167,4 @@ function mapStateToProps({category} ) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addPost : (data) => dispatch(addPost(data)),
-    editPost : (data) => dispatch(editPost(data)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form)
+export default connect(mapStateToProps, {addPost, editPost})(Form)

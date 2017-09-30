@@ -110,11 +110,5 @@ function mapStateToProps({post, category} ) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    configPost : (data) => dispatch((configPost(data))),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostList)
+export default connect(mapStateToProps, {configPost})(PostList)
 
