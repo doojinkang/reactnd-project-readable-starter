@@ -7,7 +7,7 @@ import {Grid, Row, Col } from 'react-bootstrap'
 import { _dt } from '../lib/dateUtil'
 import { sortGenerator, glyphy } from '../lib/sortUtil'
 
-import { postConfig } from '../actions/postActions'
+import { configPost } from '../actions/postActions'
 
 class PostList extends Component {
   nameByPath(path) {
@@ -112,7 +112,7 @@ function mapStateToProps({post, category} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    configPost : (data) => dispatch((postConfig(data))),
+    configPost : (data) => dispatch((configPost(data))),
   }
 }
 

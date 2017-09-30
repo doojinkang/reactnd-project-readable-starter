@@ -9,7 +9,7 @@ import Form from './Form'
 import Comment from './Comment'
 import NotFound from '../components/NotFound'
 
-import { postVote, postDelete } from '../actions/postActions'
+import { votePost, deletePost } from '../actions/postActions'
 
 import './style.css'
 
@@ -138,8 +138,8 @@ function mapStateToProps({category, comment} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    votePost : (data) => dispatch((postVote(data))),
-    deletePost : (data) => dispatch((postDelete(data))),
+    votePost : (data) => dispatch((votePost(data))),
+    deletePost : (data) => dispatch((deletePost(data))),
   }
 }
 

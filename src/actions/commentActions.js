@@ -15,42 +15,12 @@ function commentActionGenerator(type) {
   }
 }
 
-export const commentAdd = commentActionGenerator(COMMENT_ADD)
-export const commentEdit = commentActionGenerator(COMMENT_EDIT)
-export const commentVote = commentActionGenerator(COMMENT_VOTE)
-export const commentDelete = commentActionGenerator(COMMENT_DELETE)
+export const addComment = commentActionGenerator(COMMENT_ADD)
+export const editComment = commentActionGenerator(COMMENT_EDIT)
+export const voteComment = commentActionGenerator(COMMENT_VOTE)
+export const deleteComment = commentActionGenerator(COMMENT_DELETE)
 
-/*
-export function commentAdd(comment) {
-  return {
-    type: COMMENT_ADD,
-    comment
-  }
-}
-
-export function commentEdit(comment) {
-  return {
-    type: COMMENT_EDIT,
-    comment
-  }
-}
-
-export function commentVote (comment) {
-  return {
-    type: COMMENT_VOTE,
-    comment
-  }
-}
-
-export function commentDelete (comment) {
-  return {
-    type: COMMENT_DELETE,
-    comment
-  }
-}
-*/
-
-export function commentConfig ({sortBy, order}) {
+export function configComment ({sortBy, order}) {
   return {
     type: COMMENT_CONFIG,
     sortBy,

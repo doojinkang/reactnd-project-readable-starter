@@ -7,7 +7,7 @@ import base64 from 'uuid-base64'
 import * as PostAPI from '../PostAPI'
 
 import Toast from '../components/Toast'
-import { postAdd, postEdit } from '../actions/postActions'
+import { addPost, editPost } from '../actions/postActions'
 
 import './style.css'
 
@@ -169,8 +169,8 @@ function mapStateToProps({category} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost : (data) => dispatch(postAdd(data)),
-    editPost : (data) => dispatch(postEdit(data)),
+    addPost : (data) => dispatch(addPost(data)),
+    editPost : (data) => dispatch(editPost(data)),
   }
 }
 

@@ -11,8 +11,8 @@ import Form from './routes/Form'
 import Detail from './routes/Detail'
 import Header from './components/Header'
 
-import { postAdd } from './actions/postActions'
-import { categoryAdd } from './actions/categoryActions'
+import { addPost } from './actions/postActions'
+import { addCategory } from './actions/categoryActions'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap-theme.css'
@@ -76,8 +76,8 @@ function mapStateToProps( {post, category} ) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addPost : (data) => dispatch(postAdd(data)),
-    addCategory : (data) => dispatch(categoryAdd(data))
+    addPost : (data) => dispatch(addPost(data)),
+    addCategory : (data) => dispatch(addCategory(data))
   }
 }
 
