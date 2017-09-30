@@ -6,6 +6,21 @@ import {
     COMMENT_CONFIG
 } from './types.js'
 
+function commentActionGenerator(type) {
+  return function(comment) {
+    return {
+      type,
+      comment
+    }
+  }
+}
+
+export const commentAdd = commentActionGenerator(COMMENT_ADD)
+export const commentEdit = commentActionGenerator(COMMENT_EDIT)
+export const commentVote = commentActionGenerator(COMMENT_VOTE)
+export const commentDelete = commentActionGenerator(COMMENT_DELETE)
+
+/*
 export function commentAdd(comment) {
   return {
     type: COMMENT_ADD,
@@ -33,6 +48,7 @@ export function commentDelete (comment) {
     comment
   }
 }
+*/
 
 export function commentConfig ({sortBy, order}) {
   return {

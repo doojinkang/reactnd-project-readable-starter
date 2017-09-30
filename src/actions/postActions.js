@@ -6,6 +6,21 @@ import {
     POST_CONFIG
 } from './types.js'
 
+function postActionGenerator(type) {
+  return function(post) {
+    return {
+      type,
+      post
+    }
+  }
+}
+
+export const postAdd = postActionGenerator(POST_ADD)
+export const postEdit = postActionGenerator(POST_EDIT)
+export const postVote = postActionGenerator(POST_VOTE)
+export const postDelete = postActionGenerator(POST_DELETE)
+
+/*
 export function postAdd (post) {
   return {
     type: POST_ADD,
@@ -33,6 +48,7 @@ export function postDelete (post) {
     post
   }
 }
+*/
 
 export function postConfig ({sortBy, order}) {
   return {
