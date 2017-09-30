@@ -7,6 +7,7 @@ import { _dt } from '../lib/dateUtil'
 
 import Form from './Form'
 import Comment from './Comment'
+import NotFound from '../components/NotFound'
 
 import { postVote, postDelete } from '../actions/postActions'
 
@@ -50,9 +51,8 @@ class Detail extends Component {
     // console.log('...', post)
     if ( !post ) {
       return (
-        <div className='container'>
-          Request content id {this.props.match.params.id} is not found
-        </div>
+        <NotFound id = {this.props.match.params.id}>
+        </NotFound>
       )
     }
     return (
